@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+    <CodeAnalysisRuleSet>..\Analyzers.ruleset</CodeAnalysisRuleSet>
+    <RootNamespace>Smart</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Usa.Smart.Avalonia.Behaviors</PackageId>
+    <Title>Smart.Avalonia.Behaviors</Title>
+    <Description>Smart Avalonia support library</Description>
+    <PackageTags>smart avalonia mvvm</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="Avalonia\Interactivity\**" />
+    <Compile Remove="Avalonia\Interactivity\**" />
+    <EmbeddedResource Remove="Avalonia\Interactivity\**" />
+    <None Remove="Avalonia\Interactivity\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.8" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.2.0.14" />
+    <PackageReference Include="Usa.Smart.Core" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Smart.Avalonia\Smart.Avalonia.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Avalonia\Interactivity\" />
+  </ItemGroup>
+
+</Project>
