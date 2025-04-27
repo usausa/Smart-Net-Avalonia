@@ -12,15 +12,15 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>2.1.3</Version>
+    <Version>0.1.0</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Authors>machi_pon</Authors>
-    <Copyright>Copyright (c) 2022 machi_pon</Copyright>
+    <Copyright>Copyright (c) 2025 machi_pon</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/usausa/Smart-Net-Maui</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/usausa/Smart-Net-Avalonia</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
