@@ -3,6 +3,7 @@ namespace Smart.Avalonia.Data;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
+using global::Avalonia;
 using global::Avalonia.Data.Converters;
 
 #pragma warning disable IDE0032
@@ -52,6 +53,6 @@ public sealed class TextReplaceConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotSupportedException();
+        return AvaloniaProperty.UnsetValue;
     }
 }

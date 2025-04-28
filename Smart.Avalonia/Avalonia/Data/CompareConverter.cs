@@ -2,6 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
 using global::Avalonia.Data.Converters;
 using global::Avalonia.Media;
 
@@ -22,7 +23,7 @@ public abstract class CompareConverter<T> : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotSupportedException();
+        return AvaloniaProperty.UnsetValue;
     }
 }
 

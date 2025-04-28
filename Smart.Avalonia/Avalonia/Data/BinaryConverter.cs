@@ -2,6 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
 using global::Avalonia.Data.Converters;
 
 using Smart.Avalonia.Expressions;
@@ -17,6 +18,6 @@ public sealed class BinaryConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotSupportedException();
+        return AvaloniaProperty.UnsetValue;
     }
 }

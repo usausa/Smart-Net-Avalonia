@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
+using global::Avalonia;
 using global::Avalonia.Data.Converters;
 
 public sealed class EnumDescriptionConverter : IValueConverter
@@ -12,7 +13,7 @@ public sealed class EnumDescriptionConverter : IValueConverter
     {
         if (value is null)
         {
-            return null;
+            return AvaloniaProperty.UnsetValue;
         }
 
         if (value is Enum)
@@ -34,6 +35,6 @@ public sealed class EnumDescriptionConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotSupportedException();
+        return AvaloniaProperty.UnsetValue;
     }
 }

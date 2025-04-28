@@ -2,6 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
 using global::Avalonia.Data.Converters;
 using global::Avalonia.Media;
 
@@ -26,11 +27,11 @@ public sealed class ColorBlendConverter : IValueConverter
         }
     }
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not Color color)
         {
-            return null;
+            return AvaloniaProperty.UnsetValue;
         }
 
         var r = Math.Min((byte)Math.Round(color.R + ((Color.R - color.R) * raito)), (byte)255);
@@ -41,6 +42,6 @@ public sealed class ColorBlendConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotSupportedException();
+        return AvaloniaProperty.UnsetValue;
     }
 }
