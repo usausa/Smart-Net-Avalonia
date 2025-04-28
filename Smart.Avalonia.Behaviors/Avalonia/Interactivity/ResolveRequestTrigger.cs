@@ -1,11 +1,13 @@
 namespace Smart.Avalonia.Interactivity;
 
+using global::Avalonia.Xaml.Interactivity;
+
 using Smart.Avalonia.Messaging;
 
-public sealed class ResolveRequestTrigger : RequestTriggerBase<ResultEventArgs>
+public sealed class ResolveRequestTrigger : RequestTriggerBase<ResolveRequestTrigger, ResolveEventArgs>
 {
-    protected override void OnEventRequest(object? sender, ResultEventArgs e)
+    protected override void OnEventRequest(object? sender, ResolveEventArgs e)
     {
-        InvokeActions(e);
+        Interaction.ExecuteActions(AssociatedObject, Actions, e);
     }
 }

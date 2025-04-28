@@ -1,31 +1,20 @@
 namespace Smart.Avalonia.Interactivity;
 
-using System.Windows;
-
-using Microsoft.Xaml.Behaviors;
+using global::Avalonia;
+using global::Avalonia.Xaml.Interactivity;
 
 using Smart.Avalonia.Expressions;
 
-[TypeConstraint(typeof(DependencyObject))]
-public sealed class CompareTrigger : TriggerBase<DependencyObject>
+public sealed class CompareTrigger : StyledElementTrigger
 {
-    public static readonly DependencyProperty BindingProperty = DependencyProperty.Register(
-        nameof(Binding),
-        typeof(object),
-        typeof(CompareTrigger),
-        new PropertyMetadata(HandlePropertyChanged));
+    public static readonly StyledProperty<object?> BindingProperty =
+        AvaloniaProperty.Register<CompareTrigger, object?>(nameof(Binding));
 
-    public static readonly DependencyProperty ParameterProperty = DependencyProperty.Register(
-        nameof(Parameter),
-        typeof(object),
-        typeof(CompareTrigger),
-        new PropertyMetadata(HandlePropertyChanged));
+    public static readonly StyledProperty<object?> ParameterProperty =
+        AvaloniaProperty.Register<CompareTrigger, object?>(nameof(Parameter));
 
-    public static readonly DependencyProperty ExpressionProperty = DependencyProperty.Register(
-        nameof(Expression),
-        typeof(ICompareExpression),
-        typeof(CompareTrigger),
-        new PropertyMetadata(CompareExpressions.Equal));
+    public static readonly StyledProperty<ICompareExpression?> ExpressionProperty =
+        AvaloniaProperty.Register<CompareTrigger, ICompareExpression?>(nameof(Expression));
 
     public object? Binding
     {
@@ -41,26 +30,45 @@ public sealed class CompareTrigger : TriggerBase<DependencyObject>
 
     public ICompareExpression? Expression
     {
-        get => (ICompareExpression)GetValue(ExpressionProperty);
+        get => GetValue(ExpressionProperty);
         set => SetValue(ExpressionProperty, value);
     }
 
-    private static void HandlePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        if (e.OldValue == e.NewValue)
+        base.OnPropertyChanged(change);
+
+        if ((change.Property == BindingProperty) ||
+            (change.Property == ParameterProperty) ||
+            (change.Property == ExpressionProperty))
+        {
+            OnValueChanged(change);
+        }
+    }
+
+    private void OnValueChanged(AvaloniaPropertyChangedEventArgs args)
+    {
+        if (!IsEnabled)
         {
             return;
         }
 
-        ((CompareTrigger)d).HandlePropertyChanged();
-    }
+        if (args.OldValue == args.NewValue)
+        {
+            return;
+        }
 
-    private void HandlePropertyChanged()
-    {
+        // TODO Dispatch required ?
+        if (AssociatedObject is null)
+        {
+            return;
+        }
+
         var expression = Expression ?? CompareExpressions.Equal;
         if (expression.Eval(Binding, Parameter))
         {
-            InvokeActions(null);
+            // TODO parameterを他にも展開
+            Interaction.ExecuteActions(AssociatedObject, Actions, Parameter);
         }
     }
 }

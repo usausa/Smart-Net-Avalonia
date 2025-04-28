@@ -14,19 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaXaml Remove="Avalonia\Interactivity\**" />
-    <Compile Remove="Avalonia\Interactivity\**" />
-    <EmbeddedResource Remove="Avalonia\Interactivity\**" />
-    <None Remove="Avalonia\Interactivity\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Avalonia\Interactivity\CancelEventAction.cs" />
-    <Compile Include="Avalonia\Interactivity\ResolveMethodAction.cs" />
-    <Compile Include="Avalonia\Interactivity\ResolvePropertyAction.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.8" />
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.2.7.2" />
     <PackageReference Include="Usa.Smart.Core" Version="2.4.1" />

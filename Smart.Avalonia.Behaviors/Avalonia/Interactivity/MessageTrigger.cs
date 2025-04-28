@@ -1,23 +1,20 @@
 namespace Smart.Avalonia.Interactivity;
 
-using System.Windows;
-
-using Microsoft.Xaml.Behaviors;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Interactivity;
+using global::Avalonia.Xaml.Interactivity;
 
 using Smart.Avalonia.Messaging;
 
-[TypeConstraint(typeof(FrameworkElement))]
-public sealed class MessageTrigger : TriggerBase<FrameworkElement>
+public sealed class MessageTrigger : StyledElementTrigger<Control>
 {
-    public static readonly DependencyProperty MessengerProperty = DependencyProperty.Register(
-        nameof(Messenger),
-        typeof(IMessenger),
-        typeof(MessageTrigger),
-        new PropertyMetadata(HandleMessengerPropertyChanged));
+    public static readonly StyledProperty<IMessenger?> MessengerProperty =
+        AvaloniaProperty.Register<MessageTrigger, IMessenger?>(nameof(Messenger));
 
     public IMessenger? Messenger
     {
-        get => (IMessenger)GetValue(MessengerProperty);
+        get => GetValue(MessengerProperty);
         set => SetValue(MessengerProperty, value);
     }
 
@@ -25,21 +22,27 @@ public sealed class MessageTrigger : TriggerBase<FrameworkElement>
 
     public Type? MessageType { get; set; }
 
-    protected override void OnAttached()
+    protected override void OnAttachedToVisualTree()
     {
-        base.OnAttached();
+        base.OnAttachedToVisualTree();
 
-        AssociatedObject.Unloaded += OnUnloaded;
+        if (AssociatedObject is not null)
+        {
+            AssociatedObject.Unloaded += OnUnloaded;
+        }
     }
 
-    protected override void OnDetaching()
+    protected override void OnDetachedFromVisualTree()
     {
-        AssociatedObject.Unloaded -= OnUnloaded;
+        if (AssociatedObject is not null)
+        {
+            AssociatedObject!.Unloaded -= OnUnloaded;
+        }
 
-        base.OnDetaching();
+        base.OnDetachedFromVisualTree();
     }
 
-    private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+    private void OnUnloaded(object? sender, RoutedEventArgs routedEventArgs)
     {
         if (Messenger is not null)
         {
@@ -47,14 +50,27 @@ public sealed class MessageTrigger : TriggerBase<FrameworkElement>
         }
     }
 
-    private static void HandleMessengerPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == MessengerProperty)
+        {
+            OnMessengerChanged(change);
+        }
+    }
+
+    private static void OnMessengerChanged(AvaloniaPropertyChangedEventArgs e)
     {
         if (e.OldValue == e.NewValue)
         {
             return;
         }
 
-        var trigger = (MessageTrigger)obj;
+        if (e.Sender is not MessageTrigger trigger)
+        {
+            return;
+        }
 
         if ((e.OldValue is not null) && (trigger.Messenger is not null))
         {
@@ -69,10 +85,15 @@ public sealed class MessageTrigger : TriggerBase<FrameworkElement>
 
     private void MessengerOnReceived(object? sender, MessengerEventArgs e)
     {
+        if (!IsEnabled)
+        {
+            return;
+        }
+
         if (((Label is null) || Label.Equals(e.Label, StringComparison.Ordinal)) &&
             ((MessageType is null) || ((e.MessageType is not null) && MessageType.IsAssignableFrom(e.MessageType))))
         {
-            InvokeActions(e.Message);
+            Interaction.ExecuteActions(AssociatedObject, Actions, e.Message);
         }
     }
 }

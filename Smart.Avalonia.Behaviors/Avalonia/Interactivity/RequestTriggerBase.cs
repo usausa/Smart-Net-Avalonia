@@ -1,42 +1,46 @@
 namespace Smart.Avalonia.Interactivity;
 
-using System.Windows;
-
-using Microsoft.Xaml.Behaviors;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Interactivity;
+using global::Avalonia.Xaml.Interactivity;
 
 using Smart.Avalonia.Messaging;
 
-[TypeConstraint(typeof(FrameworkElement))]
-public abstract class RequestTriggerBase<TEventArgs> : TriggerBase<FrameworkElement>
+public abstract class RequestTriggerBase<TTrigger, TEventArgs> : StyledElementTrigger<Control>
+    where TTrigger : RequestTriggerBase<TTrigger, TEventArgs>
     where TEventArgs : EventArgs
 {
-    public static readonly DependencyProperty RequestProperty = DependencyProperty.Register(
-        nameof(Request),
-        typeof(IEventRequest<TEventArgs>),
-        typeof(RequestTriggerBase<TEventArgs>),
-        new PropertyMetadata(HandleRequestPropertyChanged));
+    public static readonly StyledProperty<IEventRequest<TEventArgs>?> RequestProperty =
+        AvaloniaProperty.Register<TTrigger, IEventRequest<TEventArgs>?>(nameof(Messenger));
 
     public IEventRequest<TEventArgs>? Request
     {
-        get => (IEventRequest<TEventArgs>)GetValue(RequestProperty);
+        get => GetValue(RequestProperty);
         set => SetValue(RequestProperty, value);
     }
 
-    protected override void OnAttached()
+    protected override void OnAttachedToVisualTree()
     {
-        base.OnAttached();
+        base.OnAttachedToVisualTree();
 
-        AssociatedObject.Unloaded += OnUnloaded;
+        if (AssociatedObject is not null)
+        {
+            AssociatedObject.Unloaded += OnUnloaded;
+        }
     }
 
-    protected override void OnDetaching()
+    protected override void OnDetachedFromVisualTree()
     {
-        AssociatedObject.Unloaded -= OnUnloaded;
+        if (AssociatedObject is not null)
+        {
+            AssociatedObject.Unloaded -= OnUnloaded;
+        }
 
-        base.OnDetaching();
+        base.OnDetachedFromVisualTree();
     }
 
-    private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+    private void OnUnloaded(object? sender, RoutedEventArgs routedEventArgs)
     {
         if (Request is not null)
         {
@@ -44,14 +48,27 @@ public abstract class RequestTriggerBase<TEventArgs> : TriggerBase<FrameworkElem
         }
     }
 
-    private static void HandleRequestPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == RequestProperty)
+        {
+            OnRequestChanged(change);
+        }
+    }
+
+    private static void OnRequestChanged(AvaloniaPropertyChangedEventArgs e)
     {
         if (e.OldValue == e.NewValue)
         {
             return;
         }
 
-        var trigger = (RequestTriggerBase<TEventArgs>)obj;
+        if (e.Sender is not TTrigger trigger)
+        {
+            return;
+        }
 
         if ((e.OldValue is not null) && (trigger.Request is not null))
         {
