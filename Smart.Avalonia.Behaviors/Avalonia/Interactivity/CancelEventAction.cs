@@ -1,28 +1,36 @@
 namespace Smart.Avalonia.Interactivity;
 
 using System.ComponentModel;
-using System.Windows;
 
-using Microsoft.Xaml.Behaviors;
+using global::Avalonia;
+using global::Avalonia.Xaml.Interactivity;
 
-[TypeConstraint(typeof(DependencyObject))]
-public sealed class CancelEventAction : TriggerAction<DependencyObject>
+public sealed class CancelEventAction : StyledElementAction
 {
-    public static readonly DependencyProperty CancelProperty = DependencyProperty.Register(
-        nameof(Cancel),
-        typeof(bool),
-        typeof(CancelEventAction),
-        new PropertyMetadata(false));
+    public static readonly StyledProperty<bool> CancelProperty =
+        AvaloniaProperty.Register<CancelEventAction, bool>(nameof(Cancel));
 
     public bool Cancel
     {
-        get => (bool)GetValue(CancelProperty);
+        get => GetValue(CancelProperty);
         set => SetValue(CancelProperty, value);
     }
 
-    protected override void Invoke(object parameter)
+    public override object? Execute(object? sender, object? parameter)
     {
-        var args = (CancelEventArgs)parameter;
-        args.Cancel = Cancel;
+        if (!IsEnabled)
+        {
+            return false;
+        }
+
+        if (parameter is not CancelEventArgs args)
+        {
+            return false;
+        }
+
+        var cancel = Cancel;
+        args.Cancel = cancel;
+
+        return cancel;
     }
 }

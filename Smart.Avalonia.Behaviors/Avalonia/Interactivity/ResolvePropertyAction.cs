@@ -1,25 +1,17 @@
 namespace Smart.Avalonia.Interactivity;
 
 using System.Reflection;
-using System.Windows;
 
-using Microsoft.Xaml.Behaviors;
+using global::Avalonia;
+using global::Avalonia.Xaml.Interactivity;
 
-using Smart.Avalonia.Messaging;
-
-[TypeConstraint(typeof(DependencyObject))]
-public sealed class ResolvePropertyAction : TriggerAction<DependencyObject>
+public sealed class ResolvePropertyAction : StyledElementAction
 {
-    public static readonly DependencyProperty TargetObjectProperty = DependencyProperty.Register(
-        nameof(TargetObject),
-        typeof(object),
-        typeof(ResolvePropertyAction));
+    public static readonly StyledProperty<object?> TargetObjectProperty =
+        AvaloniaProperty.Register<ResolvePropertyAction, object?>(nameof(TargetObject));
 
-    public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.Register(
-        nameof(PropertyName),
-        typeof(object),
-        typeof(ResolvePropertyAction),
-        new PropertyMetadata(string.Empty));
+    public static readonly StyledProperty<string> PropertyNameProperty =
+        AvaloniaProperty.Register<ResolvePropertyAction, string>(nameof(PropertyName), string.Empty);
 
     public object? TargetObject
     {
@@ -29,19 +21,34 @@ public sealed class ResolvePropertyAction : TriggerAction<DependencyObject>
 
     public string PropertyName
     {
-        get => (string)GetValue(PropertyNameProperty);
+        get => GetValue(PropertyNameProperty);
         set => SetValue(PropertyNameProperty, value);
     }
 
     private PropertyInfo? cachedProperty;
 
-    protected override void Invoke(object parameter)
+    public override object Execute(object? sender, object? parameter)
     {
-        var target = TargetObject ?? AssociatedObject;
+        if (!IsEnabled)
+        {
+            return false;
+        }
+
+        if (parameter is not Smart.Avalonia.Messaging.ResolveEventArgs args)
+        {
+            return false;
+        }
+
+        var target = TargetObject ?? sender;
+        if (target is null)
+        {
+            return false;
+        }
+
         var propertyName = PropertyName;
         if (String.IsNullOrEmpty(propertyName))
         {
-            return;
+            return false;
         }
 
         if ((cachedProperty is null) ||
@@ -51,11 +58,11 @@ public sealed class ResolvePropertyAction : TriggerAction<DependencyObject>
             cachedProperty = target.GetType().GetRuntimeProperty(propertyName);
             if (cachedProperty is null)
             {
-                return;
+                return false;
             }
         }
 
-        var eventArgs = (ResultEventArgs)parameter;
-        eventArgs.Result = cachedProperty.GetValue(target);
+        args.Result = cachedProperty.GetValue(target);
+        return true;
     }
 }

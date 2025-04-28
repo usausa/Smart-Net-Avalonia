@@ -1,25 +1,17 @@
 namespace Smart.Avalonia.Interactivity;
 
 using System.Reflection;
-using System.Windows;
 
-using Microsoft.Xaml.Behaviors;
+using global::Avalonia;
+using global::Avalonia.Xaml.Interactivity;
 
-using Smart.Avalonia.Messaging;
-
-[TypeConstraint(typeof(DependencyObject))]
-public sealed class ResolveMethodAction : TriggerAction<DependencyObject>
+public sealed class ResolveMethodAction : StyledElementAction
 {
-    public static readonly DependencyProperty TargetObjectProperty = DependencyProperty.Register(
-        nameof(TargetObject),
-        typeof(object),
-        typeof(ResolveMethodAction));
+    public static readonly StyledProperty<object?> TargetObjectProperty =
+        AvaloniaProperty.Register<ResolveMethodAction, object?>(nameof(TargetObject));
 
-    public static readonly DependencyProperty MethodNameProperty = DependencyProperty.Register(
-        nameof(MethodName),
-        typeof(object),
-        typeof(ResolveMethodAction),
-        new PropertyMetadata(string.Empty));
+    public static readonly StyledProperty<string> MethodNameProperty =
+        AvaloniaProperty.Register<ResolveMethodAction, string>(nameof(MethodName), string.Empty);
 
     public object? TargetObject
     {
@@ -29,19 +21,34 @@ public sealed class ResolveMethodAction : TriggerAction<DependencyObject>
 
     public string MethodName
     {
-        get => (string)GetValue(MethodNameProperty);
+        get => GetValue(MethodNameProperty);
         set => SetValue(MethodNameProperty, value);
     }
 
     private MethodInfo? cachedMethod;
 
-    protected override void Invoke(object parameter)
+    public override object Execute(object? sender, object? parameter)
     {
-        var target = TargetObject ?? AssociatedObject;
+        if (!IsEnabled)
+        {
+            return false;
+        }
+
+        if (parameter is not Smart.Avalonia.Messaging.ResolveEventArgs args)
+        {
+            return false;
+        }
+
+        var target = TargetObject ?? sender;
+        if (target is null)
+        {
+            return false;
+        }
+
         var methodName = MethodName;
         if (String.IsNullOrEmpty(methodName))
         {
-            return;
+            return false;
         }
 
         if ((cachedMethod is null) ||
@@ -53,11 +60,11 @@ public sealed class ResolveMethodAction : TriggerAction<DependencyObject>
                 (m.GetParameters().Length == 0));
             if (cachedMethod is null)
             {
-                return;
+                return false;
             }
         }
 
-        var eventArgs = (ResultEventArgs)parameter;
-        eventArgs.Result = cachedMethod.Invoke(target, null);
+        args.Result = cachedMethod.Invoke(target, null);
+        return true;
     }
 }
