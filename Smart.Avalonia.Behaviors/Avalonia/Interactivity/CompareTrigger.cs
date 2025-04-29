@@ -58,7 +58,6 @@ public sealed class CompareTrigger : StyledElementTrigger
             return;
         }
 
-        // TODO Dispatch required ?
         if (AssociatedObject is null)
         {
             return;
@@ -67,7 +66,6 @@ public sealed class CompareTrigger : StyledElementTrigger
         var expression = Expression ?? CompareExpressions.Equal;
         if (expression.Eval(Binding, Parameter))
         {
-            // TODO parameterを他にも展開
             Interaction.ExecuteActions(AssociatedObject, Actions, Parameter);
         }
     }

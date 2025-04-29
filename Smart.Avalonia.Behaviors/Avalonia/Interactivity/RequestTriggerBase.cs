@@ -70,14 +70,14 @@ public abstract class RequestTriggerBase<TTrigger, TEventArgs> : StyledElementTr
             return;
         }
 
-        if ((e.OldValue is not null) && (trigger.Request is not null))
+        if (e.OldValue is IEventRequest<TEventArgs> oldRequest)
         {
-            trigger.Request.Requested -= trigger.EventRequestOnRequested;
+            oldRequest.Requested -= trigger.EventRequestOnRequested;
         }
 
-        if ((e.NewValue is not null) && (trigger.Request is not null))
+        if (e.NewValue is IEventRequest<TEventArgs> newRequest)
         {
-            trigger.Request.Requested += trigger.EventRequestOnRequested;
+            newRequest.Requested += trigger.EventRequestOnRequested;
         }
     }
 
