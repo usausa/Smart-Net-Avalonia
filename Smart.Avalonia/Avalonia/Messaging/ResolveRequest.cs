@@ -1,7 +1,10 @@
 namespace Smart.Avalonia.Messaging;
 
+using System.ComponentModel;
+
 public sealed class ResolveRequest<T> : IEventRequest<ResolveEventArgs>
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public event EventHandler<ResolveEventArgs>? Requested;
 
     public T Resolve()
