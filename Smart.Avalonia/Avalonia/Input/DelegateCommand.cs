@@ -2,8 +2,6 @@ namespace Smart.Avalonia.Input;
 
 using System.Windows.Input;
 
-using Smart.Avalonia.Internal;
-
 public sealed class DelegateCommand : ObserveCommandBase<DelegateCommand>, ICommand, IDisposable
 {
     private readonly Action execute;

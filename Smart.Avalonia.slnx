@@ -10,7 +10,6 @@
     <File Path="README.md" />
     <File Path="Smart.Avalonia.sln.DotSettings" />
   </Folder>
-  <Project Path="Smart.Avalonia.Behaviors/Smart.Avalonia.Behaviors.csproj" />
-  <Project Path="Smart.Avalonia.Reactive/Smart.Avalonia.Reactive.csproj" />
+  <Project Path="Smart.Avalonia.Extensions/Smart.Avalonia.Extensions.csproj" />
   <Project Path="Smart.Avalonia/Smart.Avalonia.csproj" />
 </Solution>
