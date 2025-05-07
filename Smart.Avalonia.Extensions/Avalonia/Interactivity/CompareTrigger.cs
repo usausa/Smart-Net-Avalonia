@@ -1,4 +1,4 @@
-namespace Smart.Avalonia.Interactivity.Expressions;
+namespace Smart.Avalonia.Interactivity;
 
 using global::Avalonia;
 using global::Avalonia.Xaml.Interactivity;

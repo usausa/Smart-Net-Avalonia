@@ -1,9 +1,9 @@
-namespace Smart.Avalonia.Markup.Expressions;
+namespace Smart.Avalonia.Markup;
 
 using global::Avalonia.Markup.Xaml;
 using global::Avalonia.Media;
 
-using Smart.Avalonia.Data.Expressions;
+using Smart.Avalonia.Data;
 using Smart.Mvvm.Expressions;
 
 public sealed class CompareToBoolExtension : MarkupExtension

@@ -1,4 +1,4 @@
-namespace Smart.Avalonia.Data.Converter;
+namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 

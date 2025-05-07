@@ -1,4 +1,4 @@
-namespace Smart.Avalonia.Data.Expressions;
+namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 

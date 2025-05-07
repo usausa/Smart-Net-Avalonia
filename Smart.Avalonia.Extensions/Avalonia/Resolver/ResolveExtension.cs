@@ -1,4 +1,4 @@
-namespace Smart.Avalonia.Interactivity.Resolver;
+namespace Smart.Avalonia.Resolver;
 
 using global::Avalonia.Markup.Xaml;
 

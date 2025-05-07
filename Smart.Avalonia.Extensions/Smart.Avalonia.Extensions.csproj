@@ -10,7 +10,7 @@
     <PackageId>Usa.Smart.Avalonia.Extensions</PackageId>
     <Title>Smart.Avalonia.Extensions</Title>
     <Description>Smart Avalonia support library</Description>
-    <PackageTags>smart avalonia mvvm mvvm rx</PackageTags>
+    <PackageTags>smart avalonia mvvm rx reactive</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,12 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.2.8" />
-    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.2.7.3" />
+    <PackageReference Include="Avalonia" Version="11.3.0" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.3.0" />
     <PackageReference Include="System.Reactive" Version="6.0.1" />
     <PackageReference Include="Usa.Smart.Converter" Version="2.4.0" />
     <PackageReference Include="Usa.Smart.Core" Version="2.4.1" />
-    <PackageReference Include="Usa.Smart.Mvvm" Version="1.0.0" />
+    <PackageReference Include="Usa.Smart.Mvvm" Version="1.0.1" />
     <PackageReference Include="Usa.Smart.Reactive" Version="2.4.0" />
   </ItemGroup>
 
