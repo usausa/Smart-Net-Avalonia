@@ -1,6 +1,7 @@
 namespace Smart.Avalonia.ViewModels;
 
 using Smart.Avalonia.Input;
+using Smart.Mvvm.Messaging;
 using Smart.Mvvm.State;
 using Smart.Mvvm.ViewModels;
 
@@ -16,6 +17,29 @@ public abstract class AvaloniaViewModelBase : ViewModelBase
     private static class Functions<T>
     {
         public static Func<T, bool> True { get; } = static _ => true;
+    }
+
+    // ------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------
+
+    protected AvaloniaViewModelBase()
+    {
+    }
+
+    protected AvaloniaViewModelBase(IBusyState busyState)
+        : base(busyState)
+    {
+    }
+
+    protected AvaloniaViewModelBase(IMessenger messenger)
+        : base(messenger)
+    {
+    }
+
+    protected AvaloniaViewModelBase(IBusyState busyState, IMessenger messenger)
+        : base(busyState, messenger)
+    {
     }
 
     // ------------------------------------------------------------
