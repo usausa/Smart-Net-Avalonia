@@ -7,7 +7,7 @@ using Smart.Mvvm.ViewModels;
 
 #pragma warning disable IDE0032
 // ReSharper disable ReplaceWithFieldKeyword
-public abstract class AvaloniaViewModelBase : ViewModelBase
+public abstract class ExtendViewModelBase : ViewModelBase
 {
     private static class Functions
     {
@@ -23,21 +23,21 @@ public abstract class AvaloniaViewModelBase : ViewModelBase
     // Constructor
     // ------------------------------------------------------------
 
-    protected AvaloniaViewModelBase()
+    protected ExtendViewModelBase()
     {
     }
 
-    protected AvaloniaViewModelBase(IBusyState busyState)
+    protected ExtendViewModelBase(IBusyState busyState)
         : base(busyState)
     {
     }
 
-    protected AvaloniaViewModelBase(IMessenger messenger)
+    protected ExtendViewModelBase(IMessenger messenger)
         : base(messenger)
     {
     }
 
-    protected AvaloniaViewModelBase(IBusyState busyState, IMessenger messenger)
+    protected ExtendViewModelBase(IBusyState busyState, IMessenger messenger)
         : base(busyState, messenger)
     {
     }
