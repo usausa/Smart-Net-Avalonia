@@ -37,8 +37,6 @@ public sealed class DelegateCommand : IObserveCommand
 
 public sealed class DelegateCommand<T> : IObserveCommand
 {
-    private static readonly bool IsValueType = typeof(T).IsValueType;
-
     public event EventHandler? CanExecuteChanged;
 
     private readonly Action<T> execute;
@@ -62,7 +60,7 @@ public sealed class DelegateCommand<T> : IObserveCommand
 
     private static T Cast(object? parameter)
     {
-        if ((parameter is null) && IsValueType)
+        if (typeof(T).IsValueType && (parameter is null))
         {
             return default!;
         }

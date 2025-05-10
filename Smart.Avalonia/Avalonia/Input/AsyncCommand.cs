@@ -39,8 +39,6 @@ public sealed class AsyncCommand : IObserveCommand
 
 public sealed class AsyncCommand<T> : IObserveCommand
 {
-    private static readonly bool IsValueType = typeof(T).GetTypeInfo().IsValueType;
-
     public event EventHandler? CanExecuteChanged;
 
     private readonly Func<T, Task> execute;
@@ -65,7 +63,7 @@ public sealed class AsyncCommand<T> : IObserveCommand
 
     private static T Cast(object? parameter)
     {
-        if ((parameter is null) && IsValueType)
+        if (typeof(T).IsValueType && (parameter is null))
         {
             return default!;
         }
