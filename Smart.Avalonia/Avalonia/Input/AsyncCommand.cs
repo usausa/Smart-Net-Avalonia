@@ -1,10 +1,13 @@
 namespace Smart.Avalonia.Input;
 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-public sealed class AsyncCommand : ObserveCommandBase<AsyncCommand>, ICommand, IDisposable
+public sealed class AsyncCommand : IObserveCommand
 {
+    public event EventHandler? CanExecuteChanged;
+
     private readonly Func<Task> execute;
 
     private readonly Func<bool> canExecute;
@@ -20,17 +23,25 @@ public sealed class AsyncCommand : ObserveCommandBase<AsyncCommand>, ICommand, I
         this.canExecute = canExecute;
     }
 
-    public void Dispose() => RemoveObservers();
-
     bool ICommand.CanExecute(object? parameter) => canExecute();
 
     // ReSharper disable once AsyncVoidMethod
     async void ICommand.Execute(object? parameter) => await execute().ConfigureAwait(true);
+
+#pragma warning disable CA1030
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void RaiseCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    }
+#pragma warning restore CA1030
 }
 
-public sealed class AsyncCommand<T> : ObserveCommandBase<AsyncCommand<T>>, ICommand, IDisposable
+public sealed class AsyncCommand<T> : IObserveCommand
 {
     private static readonly bool IsValueType = typeof(T).GetTypeInfo().IsValueType;
+
+    public event EventHandler? CanExecuteChanged;
 
     private readonly Func<T, Task> execute;
 
@@ -47,8 +58,6 @@ public sealed class AsyncCommand<T> : ObserveCommandBase<AsyncCommand<T>>, IComm
         this.canExecute = canExecute;
     }
 
-    public void Dispose() => RemoveObservers();
-
     bool ICommand.CanExecute(object? parameter) => canExecute(Cast(parameter));
 
     // ReSharper disable once AsyncVoidMethod
@@ -63,4 +72,12 @@ public sealed class AsyncCommand<T> : ObserveCommandBase<AsyncCommand<T>>, IComm
 
         return (T)parameter!;
     }
+
+#pragma warning disable CA1030
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void RaiseCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    }
+#pragma warning restore CA1030
 }
