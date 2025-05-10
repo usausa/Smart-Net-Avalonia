@@ -53,7 +53,7 @@ public abstract class ExtendViewModelBase : ViewModelBase
 
     protected override void Dispose(bool disposing)
     {
-        if (commands is null)
+        if (commands is not null)
         {
             PropertyChanged -= UpdateCommandState;
             commands = null;
