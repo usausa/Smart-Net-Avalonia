@@ -5,7 +5,6 @@ using System.Reactive.Linq;
 
 using Smart.Avalonia.Input;
 using Smart.Mvvm.Messaging;
-using Smart.Mvvm.State;
 using Smart.Mvvm.ViewModels;
 
 #pragma warning disable IDE0032
