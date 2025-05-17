@@ -3,6 +3,8 @@ namespace Smart.Avalonia.Input;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
+using Smart.Avalonia.Internal;
+
 public sealed class AsyncCommand : IObserveCommand
 {
     public event EventHandler? CanExecuteChanged;

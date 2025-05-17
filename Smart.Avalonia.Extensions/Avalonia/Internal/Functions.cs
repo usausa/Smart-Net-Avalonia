@@ -1,4 +1,4 @@
-namespace Smart.Avalonia.Input;
+namespace Smart.Avalonia.Internal;
 
 internal static class Functions
 {
