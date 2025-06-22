@@ -4,12 +4,14 @@ using System.Globalization;
 
 using global::Avalonia.Data.Converters;
 
+using Smart.Linq;
+
 public sealed class AnyConverter : IMultiValueConverter
 {
     public bool Invert { get; set; }
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        return values.Any(value => System.Convert.ToBoolean(value, culture)) ? !Invert : Invert;
+        return values.Any(culture, static (x, s) => System.Convert.ToBoolean(x, s)) ? !Invert : Invert;
     }
 }
