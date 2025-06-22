@@ -5,6 +5,8 @@ using System.Reflection;
 using global::Avalonia;
 using global::Avalonia.Xaml.Interactivity;
 
+using Smart.Linq;
+
 public sealed class ResolveMethodAction : StyledElementAction
 {
     public static readonly StyledProperty<object?> TargetObjectProperty =
@@ -55,8 +57,8 @@ public sealed class ResolveMethodAction : StyledElementAction
             (cachedMethod.DeclaringType != target.GetType()) ||
             (cachedMethod.Name != methodName))
         {
-            cachedMethod = target.GetType().GetRuntimeMethods().FirstOrDefault(m =>
-                m.Name == methodName &&
+            cachedMethod = target.GetType().GetRuntimeMethods().FirstOrDefault(methodName, static (m, s) =>
+                m.Name == s &&
                 (m.GetParameters().Length == 0));
             if (cachedMethod is null)
             {
