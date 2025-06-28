@@ -4,8 +4,6 @@ using System.Globalization;
 
 using global::Avalonia.Data.Converters;
 
-using Smart.Linq;
-
 public sealed class AllConverter : IMultiValueConverter
 {
     public bool Invert { get; set; }
