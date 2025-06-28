@@ -12,6 +12,14 @@ public sealed class AllConverter : IMultiValueConverter
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        return values.All(culture, static (x, s) => System.Convert.ToBoolean(x, s)) ? !Invert : Invert;
+        foreach (var value in values)
+        {
+            if (!System.Convert.ToBoolean(value, culture))
+            {
+                return Invert;
+            }
+        }
+
+        return !Invert;
     }
 }
