@@ -5,7 +5,7 @@ using System.Globalization;
 using global::Avalonia;
 using global::Avalonia.Data.Converters;
 
-using Smart.Mvvm.Expressions;
+using Smart.Avalonia.Expressions;
 
 public sealed class BinaryConverter : IValueConverter
 {

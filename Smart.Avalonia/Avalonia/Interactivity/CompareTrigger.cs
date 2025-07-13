@@ -3,7 +3,7 @@ namespace Smart.Avalonia.Interactivity;
 using global::Avalonia;
 using global::Avalonia.Xaml.Interactivity;
 
-using Smart.Mvvm.Expressions;
+using Smart.Avalonia.Expressions;
 
 public sealed class CompareTrigger : StyledElementTrigger
 {

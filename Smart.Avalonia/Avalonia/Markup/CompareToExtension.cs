@@ -4,7 +4,7 @@ using global::Avalonia.Markup.Xaml;
 using global::Avalonia.Media;
 
 using Smart.Avalonia.Data;
-using Smart.Mvvm.Expressions;
+using Smart.Avalonia.Expressions;
 
 public sealed class CompareToBoolExtension : MarkupExtension
 {

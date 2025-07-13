@@ -4,7 +4,7 @@ using System.Globalization;
 
 using global::Avalonia.Data.Converters;
 
-using Smart.Mvvm.Expressions;
+using Smart.Avalonia.Expressions;
 
 public sealed class MultiBinaryConverter : IMultiValueConverter
 {

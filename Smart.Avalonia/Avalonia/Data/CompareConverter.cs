@@ -6,7 +6,7 @@ using global::Avalonia;
 using global::Avalonia.Data.Converters;
 using global::Avalonia.Media;
 
-using Smart.Mvvm.Expressions;
+using Smart.Avalonia.Expressions;
 
 public abstract class CompareConverter<T> : IValueConverter
 {
