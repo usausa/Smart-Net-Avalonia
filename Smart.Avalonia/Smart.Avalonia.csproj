@@ -14,10 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.2" />
+    <PackageReference Include="Avalonia" Version="11.3.7" />
     <PackageReference Include="Usa.Smart.Converter" Version="2.4.0" />
-    <PackageReference Include="Usa.Smart.Core" Version="2.4.4" />
-    <PackageReference Include="Xaml.Behaviors.Avalonia" Version="11.3.2" />
+    <PackageReference Include="Usa.Smart.Core" Version="2.4.6" />
+    <PackageReference Include="Xaml.Behaviors.Avalonia" Version="11.3.6.4" />
   </ItemGroup>
 
 </Project>
