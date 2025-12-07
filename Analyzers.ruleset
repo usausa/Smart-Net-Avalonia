@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Smart.Forms Rules" Description="Smart.Forms Rules" ToolsVersion="17.0">
+<RuleSet Name="Smart.Avalonia Rules" Description="Smart.Avalonia Rules" ToolsVersion="17.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1101" Action="Hidden" />
@@ -23,6 +23,5 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.NetAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.NetAnalyzers">
     <Rule Id="CA1062" Action="Hidden" />
-    <Rule Id="CA2007" Action="Hidden" />
   </Rules>
 </RuleSet>
