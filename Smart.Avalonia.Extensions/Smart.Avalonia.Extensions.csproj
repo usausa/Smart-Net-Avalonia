@@ -19,10 +19,10 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.9" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
     <PackageReference Include="System.Reactive" Version="6.1.0" />
     <PackageReference Include="Usa.Smart.Core" Version="2.5.0" />
-    <PackageReference Include="Usa.Smart.Mvvm" Version="1.9.1" />
+    <PackageReference Include="Usa.Smart.Mvvm" Version="1.9.2" />
     <PackageReference Include="Usa.Smart.Reactive" Version="2.6.0" />
     <PackageReference Include="Xaml.Behaviors.Avalonia" Version="11.3.9" />
   </ItemGroup>
