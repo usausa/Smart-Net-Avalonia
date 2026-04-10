@@ -1,6 +1,7 @@
 namespace Smart.Avalonia.Resolver;
 
 using global::Avalonia.Markup.Xaml;
+using global::Avalonia.Metadata;
 
 using Smart.Mvvm.Resolver;
 
