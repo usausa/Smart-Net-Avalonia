@@ -12,7 +12,7 @@ public sealed class AllConverter : IMultiValueConverter
 
     public bool Invert { get; set; }
 
-    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         foreach (var value in values)
         {
