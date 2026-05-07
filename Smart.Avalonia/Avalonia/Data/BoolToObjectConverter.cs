@@ -2,6 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
 using global::Avalonia.Data.Converters;
 using global::Avalonia.Media;
 
@@ -23,7 +24,33 @@ public abstract class BoolToObjectConverter<T> : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return Equals(value, TrueValue);
+        if (value is T typed)
+        {
+            if (typed is IEquatable<T> equatable)
+            {
+                if (equatable.Equals(TrueValue))
+                {
+                    return true;
+                }
+                if (equatable.Equals(FalseValue))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (Equals(typed, TrueValue))
+                {
+                    return true;
+                }
+                if (Equals(typed, FalseValue))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return AvaloniaProperty.UnsetValue;
     }
 }
 
