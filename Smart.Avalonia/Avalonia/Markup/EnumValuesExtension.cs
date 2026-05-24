@@ -1,5 +1,7 @@
 namespace Smart.Avalonia.Markup;
 
+using System.Diagnostics.CodeAnalysis;
+
 using global::Avalonia.Markup.Xaml;
 
 public sealed class EnumValuesExtension : MarkupExtension
@@ -11,5 +13,6 @@ public sealed class EnumValuesExtension : MarkupExtension
         Type = type;
     }
 
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Enum.GetValues(Type) is used at runtime. Use Enum.GetValues<TEnum>() for AOT-safe usage where possible.")]
     public override object ProvideValue(IServiceProvider serviceProvider) => Enum.GetValues(Type);
 }

@@ -1,5 +1,6 @@
 namespace Smart.Avalonia.Data;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 using global::Avalonia.Data.Converters;
@@ -10,11 +11,15 @@ public sealed class ObjectConvertConverter : IValueConverter
 {
     public IObjectConverter Converter { get; set; } = ObjectConverter.Default;
 
+    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "ObjectConverter uses reflection internally. Callers must ensure target types are preserved.")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "ObjectConverter uses MakeGenericType/MakeGenericMethod internally. Not AOT-safe by design.")]
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return Converter.Convert(value, targetType);
     }
 
+    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "ObjectConverter uses reflection internally. Callers must ensure target types are preserved.")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "ObjectConverter uses MakeGenericType/MakeGenericMethod internally. Not AOT-safe by design.")]
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return Converter.Convert(value, targetType);

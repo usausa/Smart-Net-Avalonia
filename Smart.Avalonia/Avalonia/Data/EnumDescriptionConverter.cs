@@ -1,6 +1,7 @@
 namespace Smart.Avalonia.Data;
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 
@@ -9,6 +10,7 @@ using global::Avalonia.Data.Converters;
 
 public sealed class EnumDescriptionConverter : IValueConverter
 {
+    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2075", Justification = "Enum member reflection may not be available in trimmed applications. Use DynamicDependency on the enum type to preserve members.")]
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is null)
