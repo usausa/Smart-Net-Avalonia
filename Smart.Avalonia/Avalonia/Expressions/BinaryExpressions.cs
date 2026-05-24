@@ -1,6 +1,6 @@
 namespace Smart.Avalonia.Expressions;
 
-using System.Numerics;
+using System.Diagnostics.CodeAnalysis;
 
 public static class BinaryExpressions
 {
@@ -14,6 +14,7 @@ public static class BinaryExpressions
 
     private abstract class CompareExpression : IBinaryExpression
     {
+        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "ConvertHelper uses TypeDescriptor; callers are XAML-driven runtime expressions")]
         public object? Eval(object? left, object? right)
         {
             if ((left is IComparable comparable) && (right is not null))
@@ -51,6 +52,7 @@ public static class BinaryExpressions
 
     private abstract class ArithmeticExpression : IBinaryExpression
     {
+        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "ConvertHelper uses TypeDescriptor; callers are XAML-driven runtime expressions")]
         public object? Eval(object? left, object? right)
         {
             if ((left is null) || (right is null))

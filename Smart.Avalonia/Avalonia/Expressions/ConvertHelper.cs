@@ -6,8 +6,7 @@ using System.Globalization;
 
 public static class ConvertHelper
 {
-    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2067", Justification = "TypeDescriptor.GetConverter requires type metadata that callers should preserve via DynamicDependency or DynamicallyAccessedMembers.")]
-    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "TypeDescriptor.GetConverter uses reflection internally. Callers must ensure target types are preserved.")]
+    [RequiresUnreferencedCode("Uses TypeDescriptor which is not trim-compatible")]
     public static object? Convert(Type targetType, object value)
     {
         if (targetType == value.GetType())

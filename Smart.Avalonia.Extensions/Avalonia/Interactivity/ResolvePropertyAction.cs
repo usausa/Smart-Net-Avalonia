@@ -28,8 +28,8 @@ public sealed class ResolvePropertyAction : StyledElementAction
 
     private PropertyInfo? cachedProperty;
 
-    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2072", Justification = "GetRuntimeProperty uses reflection on a runtime type. Callers should preserve property metadata via DynamicDependency.")]
-    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "PropertyInfo.GetValue is used at runtime; this class is not AOT-safe by design.")]
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Target type is determined at runtime via XAML; callers must ensure the type is preserved")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "PropertyInfo.GetValue is used at runtime; not AOT-safe by design")]
     public override object Execute(object? sender, object? parameter)
     {
         if (!IsEnabled)

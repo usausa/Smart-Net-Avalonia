@@ -30,8 +30,8 @@ public sealed class ResolveMethodAction : StyledElementAction
 
     private MethodInfo? cachedMethod;
 
-    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2072", Justification = "GetRuntimeMethods uses reflection on a runtime type. Callers should preserve method metadata via DynamicDependency.")]
-    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "MethodInfo.Invoke is used at runtime; this class is not AOT-safe by design.")]
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Target type is determined at runtime via XAML; callers must ensure the type is preserved")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "MethodInfo.Invoke is used at runtime; not AOT-safe by design")]
     public override object Execute(object? sender, object? parameter)
     {
         if (!IsEnabled)

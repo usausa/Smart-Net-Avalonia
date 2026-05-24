@@ -13,6 +13,7 @@ public sealed class EnumValuesExtension : MarkupExtension
         Type = type;
     }
 
-    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Enum.GetValues(Type) is used at runtime. Use Enum.GetValues<TEnum>() for AOT-safe usage where possible.")]
+    [UnconditionalSuppressMessage("Trimming", "IL2111", Justification = "Enum type is specified by user; they must ensure it is preserved")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Enum.GetValues(Type) uses dynamic code; use Enum.GetValues<TEnum>() for AOT-safe usage")]
     public override object ProvideValue(IServiceProvider serviceProvider) => Enum.GetValues(Type);
 }
