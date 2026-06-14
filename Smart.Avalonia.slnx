@@ -6,6 +6,7 @@
     <File Path="AGENTS.md" />
     <File Path="Analyzers.ruleset" />
     <File Path="CLAUDE.md" />
+    <File Path="CodeCoverage.runsettings" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Build.targets" />
     <File Path="LICENSE" />
@@ -13,5 +14,6 @@
     <File Path="Smart.Avalonia.sln.DotSettings" />
   </Folder>
   <Project Path="Smart.Avalonia.Extensions/Smart.Avalonia.Extensions.csproj" />
+  <Project Path="Smart.Avalonia.Tests/Smart.Avalonia.Tests.csproj" />
   <Project Path="Smart.Avalonia/Smart.Avalonia.csproj" />
 </Solution>
