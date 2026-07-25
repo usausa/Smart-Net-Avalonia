@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Smart.Avalonia\Smart.Avalonia.csproj" />
+    <ProjectReference Include="..\Smart.Avalonia.Extensions\Smart.Avalonia.Extensions.csproj" />
   </ItemGroup>
 
 </Project>
