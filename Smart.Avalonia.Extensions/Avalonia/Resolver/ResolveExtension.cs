@@ -5,8 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using global::Avalonia.Markup.Xaml;
 using global::Avalonia.Metadata;
 
-using Smart.Mvvm.Resolver;
-
 public sealed class ResolveExtension : MarkupExtension
 {
     [ConstructorArgument("type")]
@@ -22,5 +20,5 @@ public sealed class ResolveExtension : MarkupExtension
         Type = type;
     }
 
-    public override object ProvideValue(IServiceProvider serviceProvider) => ResolveProvider.Default.GetService(Type)!;
+    public override object ProvideValue(IServiceProvider serviceProvider) => ResolveHelper.Resolve(Type);
 }

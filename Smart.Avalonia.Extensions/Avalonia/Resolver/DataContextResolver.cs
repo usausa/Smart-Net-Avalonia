@@ -3,12 +3,13 @@ namespace Smart.Avalonia.Resolver;
 using global::Avalonia;
 using global::Avalonia.Controls;
 
-using Smart.Mvvm.Resolver;
-
 public static class DataContextResolver
 {
     public static readonly AttachedProperty<Type> TypeProperty =
         AvaloniaProperty.RegisterAttached<Control, Type>("Type", typeof(DataContextResolver));
+
+    private static readonly AttachedProperty<object?> ResolvedProperty =
+        AvaloniaProperty.RegisterAttached<Control, object?>("Resolved", typeof(DataContextResolver));
 
     public static readonly AttachedProperty<bool> DisposeOnChangedProperty =
         AvaloniaProperty.RegisterAttached<Control, bool>("DisposeOnChanged", typeof(DataContextResolver));
@@ -32,11 +33,16 @@ public static class DataContextResolver
 
     private static void HandleTypePropertyChanged(Control control, AvaloniaPropertyChangedEventArgs e)
     {
-        if (control.DataContext is IDisposable disposable && GetDisposeOnChanged(control))
+        var resolved = control.GetValue(ResolvedProperty);
+        if (GetDisposeOnChanged(control) &&
+            ReferenceEquals(control.DataContext, resolved) &&
+            resolved is IDisposable disposable)
         {
             disposable.Dispose();
         }
 
-        control.DataContext = e.NewValue is not null ? ResolveProvider.Default.GetService((Type)e.NewValue) : null;
+        var context = e.NewValue is not null ? ResolveHelper.Resolve((Type)e.NewValue) : null;
+        control.SetValue(ResolvedProperty, context);
+        control.DataContext = context;
     }
 }
