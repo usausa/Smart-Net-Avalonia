@@ -8,8 +8,34 @@ public sealed class MapToObjectConverterTest
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 
-    // NOTE: MapToObjectConverter<T>.Entries is a get-only empty array intended for XAML population.
-    // Without a running XAML loader, entries cannot be added, so only the default-value path is tested.
+    [Fact]
+    public void ConvertMatchedEntryReturnsMappedValue()
+    {
+        // Arrange
+        var converter = new MapToTextConverter { DefaultValue = "default" };
+        converter.Entries.Add(new MapToTextEntry { Key = 1, Value = "one" });
+        converter.Entries.Add(new MapToTextEntry { Key = 2, Value = "two" });
+
+        // Act
+        var result = converter.Convert(2, typeof(string), null, Culture);
+
+        // Assert
+        Assert.Equal("two", result);
+    }
+
+    [Fact]
+    public void ConvertUnmatchedEntryReturnsDefaultValue()
+    {
+        // Arrange
+        var converter = new MapToTextConverter { DefaultValue = "default" };
+        converter.Entries.Add(new MapToTextEntry { Key = 1, Value = "one" });
+
+        // Act
+        var result = converter.Convert(9, typeof(string), null, Culture);
+
+        // Assert
+        Assert.Equal("default", result);
+    }
 
     [Fact]
     public void ConvertNoMatchReturnsDefaultValue()
