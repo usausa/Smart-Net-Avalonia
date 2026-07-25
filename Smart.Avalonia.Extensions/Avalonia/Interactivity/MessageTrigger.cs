@@ -22,31 +22,76 @@ public sealed class MessageTrigger : StyledElementTrigger<Control>
 
     public Type? MessageType { get; set; }
 
+    private bool subscribed;
+
     protected override void OnAttachedToVisualTree()
     {
         base.OnAttachedToVisualTree();
 
         if (AssociatedObject is not null)
         {
+            AssociatedObject.Loaded += OnLoaded;
             AssociatedObject.Unloaded += OnUnloaded;
+
+            if (AssociatedObject.IsLoaded)
+            {
+                Subscribe();
+            }
         }
     }
 
     protected override void OnDetachedFromVisualTree()
     {
+        Unsubscribe();
+
         if (AssociatedObject is not null)
         {
-            AssociatedObject!.Unloaded -= OnUnloaded;
+            AssociatedObject.Loaded -= OnLoaded;
+            AssociatedObject.Unloaded -= OnUnloaded;
         }
 
         base.OnDetachedFromVisualTree();
     }
 
-    private void OnUnloaded(object? sender, RoutedEventArgs routedEventArgs)
+    private void OnLoaded(object? sender, RoutedEventArgs e) => Subscribe();
+
+    private void OnUnloaded(object? sender, RoutedEventArgs e) => Unsubscribe();
+
+    private void Subscribe()
     {
-        if (Messenger is not null)
+        if (subscribed)
         {
-            Messenger.Received -= MessengerOnReceived;
+            return;
+        }
+
+        subscribed = true;
+        AddReceived(Messenger);
+    }
+
+    private void Unsubscribe()
+    {
+        if (!subscribed)
+        {
+            return;
+        }
+
+        subscribed = false;
+        RemoveReceived(Messenger);
+    }
+
+    private void AddReceived(IMessenger? messenger)
+    {
+        if (messenger is not null)
+        {
+            messenger.Received += MessengerOnReceived;
+        }
+    }
+
+    private void RemoveReceived(IMessenger? messenger)
+    {
+        if (messenger is not null)
+        {
+            messenger.Received -= MessengerOnReceived;
         }
     }
 
@@ -56,30 +101,13 @@ public sealed class MessageTrigger : StyledElementTrigger<Control>
 
         if (change.Property == MessengerProperty)
         {
-            OnMessengerChanged(change);
-        }
-    }
+            if (!subscribed)
+            {
+                return;
+            }
 
-    private static void OnMessengerChanged(AvaloniaPropertyChangedEventArgs e)
-    {
-        if (e.OldValue == e.NewValue)
-        {
-            return;
-        }
-
-        if (e.Sender is not MessageTrigger trigger)
-        {
-            return;
-        }
-
-        if (e.OldValue is Messenger oldMessenger)
-        {
-            oldMessenger.Received -= trigger.MessengerOnReceived;
-        }
-
-        if (e.NewValue is Messenger newMessenger)
-        {
-            newMessenger.Received += trigger.MessengerOnReceived;
+            RemoveReceived(change.OldValue as IMessenger);
+            AddReceived(change.NewValue as IMessenger);
         }
     }
 

@@ -12,7 +12,7 @@ public abstract class RequestTriggerBase<TTrigger, TEventArgs> : StyledElementTr
     where TEventArgs : EventArgs
 {
     public static readonly StyledProperty<IEventRequest<TEventArgs>?> RequestProperty =
-        AvaloniaProperty.Register<TTrigger, IEventRequest<TEventArgs>?>(nameof(Messenger));
+        AvaloniaProperty.Register<TTrigger, IEventRequest<TEventArgs>?>(nameof(Request));
 
     public IEventRequest<TEventArgs>? Request
     {
@@ -20,31 +20,76 @@ public abstract class RequestTriggerBase<TTrigger, TEventArgs> : StyledElementTr
         set => SetValue(RequestProperty, value);
     }
 
+    private bool subscribed;
+
     protected override void OnAttachedToVisualTree()
     {
         base.OnAttachedToVisualTree();
 
         if (AssociatedObject is not null)
         {
+            AssociatedObject.Loaded += OnLoaded;
             AssociatedObject.Unloaded += OnUnloaded;
+
+            if (AssociatedObject.IsLoaded)
+            {
+                Subscribe();
+            }
         }
     }
 
     protected override void OnDetachedFromVisualTree()
     {
+        Unsubscribe();
+
         if (AssociatedObject is not null)
         {
+            AssociatedObject.Loaded -= OnLoaded;
             AssociatedObject.Unloaded -= OnUnloaded;
         }
 
         base.OnDetachedFromVisualTree();
     }
 
-    private void OnUnloaded(object? sender, RoutedEventArgs routedEventArgs)
+    private void OnLoaded(object? sender, RoutedEventArgs e) => Subscribe();
+
+    private void OnUnloaded(object? sender, RoutedEventArgs e) => Unsubscribe();
+
+    private void Subscribe()
     {
-        if (Request is not null)
+        if (subscribed)
         {
-            Request.Requested -= EventRequestOnRequested;
+            return;
+        }
+
+        subscribed = true;
+        AddRequested(Request);
+    }
+
+    private void Unsubscribe()
+    {
+        if (!subscribed)
+        {
+            return;
+        }
+
+        subscribed = false;
+        RemoveRequested(Request);
+    }
+
+    private void AddRequested(IEventRequest<TEventArgs>? request)
+    {
+        if (request is not null)
+        {
+            request.Requested += EventRequestOnRequested;
+        }
+    }
+
+    private void RemoveRequested(IEventRequest<TEventArgs>? request)
+    {
+        if (request is not null)
+        {
+            request.Requested -= EventRequestOnRequested;
         }
     }
 
@@ -54,30 +99,13 @@ public abstract class RequestTriggerBase<TTrigger, TEventArgs> : StyledElementTr
 
         if (change.Property == RequestProperty)
         {
-            OnRequestChanged(change);
-        }
-    }
+            if (!subscribed)
+            {
+                return;
+            }
 
-    private static void OnRequestChanged(AvaloniaPropertyChangedEventArgs e)
-    {
-        if (e.OldValue == e.NewValue)
-        {
-            return;
-        }
-
-        if (e.Sender is not TTrigger trigger)
-        {
-            return;
-        }
-
-        if (e.OldValue is IEventRequest<TEventArgs> oldRequest)
-        {
-            oldRequest.Requested -= trigger.EventRequestOnRequested;
-        }
-
-        if (e.NewValue is IEventRequest<TEventArgs> newRequest)
-        {
-            newRequest.Requested += trigger.EventRequestOnRequested;
+            RemoveRequested(change.OldValue as IEventRequest<TEventArgs>);
+            AddRequested(change.NewValue as IEventRequest<TEventArgs>);
         }
     }
 
