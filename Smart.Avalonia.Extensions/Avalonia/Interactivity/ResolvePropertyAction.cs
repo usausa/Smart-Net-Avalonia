@@ -28,6 +28,8 @@ public sealed class ResolvePropertyAction : StyledElementAction
 
     private PropertyInfo? cachedProperty;
 
+    private Type? cachedType;
+
     [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Target type is determined at runtime via XAML; callers must ensure the type is preserved")]
     [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "PropertyInfo.GetValue is used at runtime; not AOT-safe by design")]
     public override object Execute(object? sender, object? parameter)
@@ -55,10 +57,11 @@ public sealed class ResolvePropertyAction : StyledElementAction
         }
 
         if ((cachedProperty is null) ||
-            (cachedProperty.DeclaringType != target.GetType()) ||
+            (cachedType != target.GetType()) ||
             (cachedProperty.Name != propertyName))
         {
             cachedProperty = target.GetType().GetRuntimeProperty(propertyName);
+            cachedType = target.GetType();
             if (cachedProperty is null)
             {
                 return false;

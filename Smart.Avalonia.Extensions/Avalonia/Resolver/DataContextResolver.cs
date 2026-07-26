@@ -33,16 +33,17 @@ public static class DataContextResolver
 
     private static void HandleTypePropertyChanged(Control control, AvaloniaPropertyChangedEventArgs e)
     {
+        var context = e.NewValue is not null ? ResolveHelper.Resolve((Type)e.NewValue) : null;
+
         var resolved = control.GetValue(ResolvedProperty);
+        control.SetValue(ResolvedProperty, context);
+        control.DataContext = context;
+
         if (GetDisposeOnChanged(control) &&
-            ReferenceEquals(control.DataContext, resolved) &&
+            !ReferenceEquals(resolved, context) &&
             resolved is IDisposable disposable)
         {
             disposable.Dispose();
         }
-
-        var context = e.NewValue is not null ? ResolveHelper.Resolve((Type)e.NewValue) : null;
-        control.SetValue(ResolvedProperty, context);
-        control.DataContext = context;
     }
 }

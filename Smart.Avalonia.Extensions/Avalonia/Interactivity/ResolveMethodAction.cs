@@ -30,6 +30,8 @@ public sealed class ResolveMethodAction : StyledElementAction
 
     private MethodInfo? cachedMethod;
 
+    private Type? cachedType;
+
     [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Target type is determined at runtime via XAML; callers must ensure the type is preserved")]
     [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "MethodInfo.Invoke is used at runtime; not AOT-safe by design")]
     public override object Execute(object? sender, object? parameter)
@@ -57,7 +59,7 @@ public sealed class ResolveMethodAction : StyledElementAction
         }
 
         if ((cachedMethod is null) ||
-            (cachedMethod.DeclaringType != target.GetType()) ||
+            (cachedType != target.GetType()) ||
             (cachedMethod.Name != methodName))
         {
             cachedMethod = target.GetType().GetRuntimeMethods().FirstOrDefault(methodName, static (m, s) =>
@@ -67,6 +69,8 @@ public sealed class ResolveMethodAction : StyledElementAction
             {
                 return false;
             }
+
+            cachedType = target.GetType();
         }
 
         args.Result = cachedMethod.Invoke(target, null);
