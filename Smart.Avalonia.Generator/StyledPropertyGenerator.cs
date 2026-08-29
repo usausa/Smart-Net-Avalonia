@@ -253,7 +253,7 @@ public sealed class StyledPropertyGenerator : IIncrementalGenerator
                 continue;
             }
 
-            candidates.Add(new CoerceModel(methodName, method.IsStatic, method.Parameters[0].Type.ToDisplayString(TypeDisplayFormat)));
+            candidates.Add(new CoerceModel(methodName, method.IsStatic));
         }
 
         if (candidates.Count == 1)
@@ -283,7 +283,7 @@ public sealed class StyledPropertyGenerator : IIncrementalGenerator
                 continue;
             }
 
-            candidates.Add(new ValidateModel(methodName, method.Parameters[0].Type.ToDisplayString(TypeDisplayFormat)));
+            candidates.Add(new ValidateModel(methodName));
         }
 
         if (candidates.Count == 1)
