@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
+    <PackageReference Include="SourceGenerateHelper.Testing" Version="1.25.0" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.10.0" />
     <PackageReference Include="xunit.v3.mtp-v2" Version="4.0.0" />
   </ItemGroup>
@@ -22,6 +23,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Smart.Avalonia\Smart.Avalonia.csproj" />
     <ProjectReference Include="..\Smart.Avalonia.Extensions\Smart.Avalonia.Extensions.csproj" />
+    <ProjectReference Include="..\Smart.Avalonia.Generator\Smart.Avalonia.Generator.csproj" OutputItemType="analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Smart.Avalonia.Generator\Smart.Avalonia.Generator.csproj" ReferenceOutputAssembly="true" />
   </ItemGroup>
 
 </Project>
