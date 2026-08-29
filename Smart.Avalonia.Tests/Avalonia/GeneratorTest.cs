@@ -271,6 +271,36 @@ public sealed class GeneratorTest
     // ------------------------------------------------------------
 
     [Fact]
+    public void BaseTypeCallbackIsResolved()
+    {
+        // Arrange
+        const string source =
+            """
+            using Smart.Avalonia;
+            using Avalonia;
+
+            namespace Test;
+
+            public class BaseElement : AvaloniaObject
+            {
+                protected double CoerceScale(double value) => value;
+            }
+
+            public partial class TestElement : BaseElement
+            {
+                [StyledProperty(Coerce = nameof(CoerceScale))]
+                public partial double Scale { get; set; }
+            }
+            """;
+
+        // Act
+        var generated = GeneratorTestHelper.GetGeneratedSource(source);
+
+        // Assert
+        Assert.Contains("coerce: static (o, value) => ((TestElement)o).CoerceScale(value)", generated, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CoerceCallbackIsApplied()
     {
         // Arrange

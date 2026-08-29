@@ -40,11 +40,6 @@ public partial class GaugeControl : Control
 | `Coerce` | Name of a `T` method with `(T value)` |
 | `Validate` | Name of a `static bool` method with `(T value)` |
 
-Property change notification is not an option, because Avalonia handles it by overriding `OnPropertyChanged`.
-A default value is validated when the property is registered, so it must pass `Validate`.
-
-Requires C# 13 or later, because partial properties are used.
-
 ## NuGet
 
 | Package | Note  |

@@ -189,6 +189,36 @@ public sealed class DiagnosticTest
     }
 
     [Fact]
+    public void Sav0008InaccessibleBaseCallbackEmitsDiagnostic()
+    {
+        // Arrange
+        const string source =
+            """
+            using Smart.Avalonia;
+            using Avalonia;
+
+            namespace Test;
+
+            public class BaseElement : AvaloniaObject
+            {
+                private double CoerceScale(double value) => value;
+            }
+
+            public partial class TestElement : BaseElement
+            {
+                [StyledProperty(Coerce = "CoerceScale")]
+                public partial double Scale { get; set; }
+            }
+            """;
+
+        // Act
+        var diagnostics = GeneratorTestHelper.GetDiagnostics(source);
+
+        // Assert
+        Assert.Contains(diagnostics, static x => x.Id == "SAV0008");
+    }
+
+    [Fact]
     public void Sav0008CallbackNotFoundEmitsDiagnostic()
     {
         // Arrange
