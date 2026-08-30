@@ -5,39 +5,20 @@
     <IsAotCompatible>true</IsAotCompatible>
     <CodeAnalysisRuleSet>..\Analyzers.ruleset</CodeAnalysisRuleSet>
     <RootNamespace>Smart</RootNamespace>
-    <NoWarn>$(NoWarn);NU5118;NU5129</NoWarn>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
-  </PropertyGroup>
-
-  <Target Name="PackBuildOutputs" DependsOnTargets="SatelliteDllsProjectOutputGroup;DebugSymbolsProjectOutputGroup">
-    <ItemGroup>
-      <TfmSpecificPackageFile Include="..\Smart.Avalonia.Generator\bin\$(Configuration)\netstandard2.0\Smart.Avalonia.Generator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-      <TfmSpecificPackageFile Include="$(PKGSourceGenerateHelper)\lib\netstandard2.0\SourceGenerateHelper.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-      <TfmSpecificPackageFile Include="..\Smart.Avalonia.props" Pack="true" PackagePath="buildTransitive\$(PackageId).props" Visible="false" />
-      <TfmSpecificPackageFile Include="..\Smart.Avalonia.targets" Pack="true" PackagePath="buildTransitive\$(PackageId).targets" Visible="false" />
-    </ItemGroup>
-  </Target>
 
   <PropertyGroup>
     <PackageId>Usa.Smart.Avalonia</PackageId>
     <Title>Smart.Avalonia</Title>
     <Description>Smart Avalonia support library</Description>
-    <PackageTags>smart avalonia mvvm sourcegenerator</PackageTags>
+    <PackageTags>smart avalonia mvvm</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="12.1.1" />
-    <PackageReference Include="SourceGenerateHelper" Version="1.25.0" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Usa.Smart.Converter" Version="2.16.0" />
     <PackageReference Include="Usa.Smart.Core" Version="2.19.0" />
     <PackageReference Include="Xaml.Behaviors.Avalonia" Version="12.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Smart.Avalonia.Generator\Smart.Avalonia.Generator.csproj" ReferenceOutputAssembly="false" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

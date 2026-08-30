@@ -7,19 +7,13 @@
     <File Path="Analyzers.ruleset" />
     <File Path="CLAUDE.md" />
     <File Path="CodeCoverage.runsettings" />
-    <File Path="Diagnostics.md" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Build.targets" />
     <File Path="LICENSE" />
     <File Path="README.md" />
     <File Path="Smart.Avalonia.sln.DotSettings" />
-    <File Path="Smart.Avalonia.props" />
-    <File Path="Smart.Avalonia.targets" />
   </Folder>
-  <Project Path="Smart.Avalonia/Smart.Avalonia.csproj">
-    <BuildDependency Project="Smart.Avalonia.Generator/Smart.Avalonia.Generator.csproj" />
-  </Project>
-  <Project Path="Smart.Avalonia.Generator/Smart.Avalonia.Generator.csproj" />
+  <Project Path="Smart.Avalonia/Smart.Avalonia.csproj" />
   <Project Path="Smart.Avalonia.Extensions/Smart.Avalonia.Extensions.csproj" />
   <Project Path="Smart.Avalonia.Tests/Smart.Avalonia.Tests.csproj" />
 </Solution>

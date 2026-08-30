@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Smart.Avalonia.Generator": {
-      "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\Smart.Avalonia.Tests\\Smart.Avalonia.Tests.csproj"
-    }
-  }
-}
