@@ -120,7 +120,11 @@ public sealed class DiagnosticTest
 
             namespace Test;
 
-            public partial class TestElement
+            public class OtherBase
+            {
+            }
+
+            public partial class TestElement : OtherBase
             {
                 [StyledProperty]
                 public partial string? Text { get; set; }
@@ -132,6 +136,31 @@ public sealed class DiagnosticTest
 
         // Assert
         Assert.Contains(diagnostics, static x => x.Id == "SAV0005");
+    }
+
+    [Fact]
+    public void UnknownBaseTypeEmitsNoDiagnostic()
+    {
+        // Arrange
+        // The base type may be declared in another partial declaration that is generated from XAML
+        const string source =
+            """
+            using Smart.Avalonia;
+
+            namespace Test;
+
+            public partial class TestElement
+            {
+                [StyledProperty]
+                public partial string? Text { get; set; }
+            }
+            """;
+
+        // Act
+        var diagnostics = GeneratorTestHelper.GetDiagnosticsWithoutVerify(source);
+
+        // Assert
+        Assert.DoesNotContain(diagnostics, static x => x.Id == "SAV0005");
     }
 
     [Fact]

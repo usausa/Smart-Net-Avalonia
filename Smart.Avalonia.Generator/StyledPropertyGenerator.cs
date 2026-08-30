@@ -114,19 +114,24 @@ public sealed class StyledPropertyGenerator : IIncrementalGenerator
             }
         }
 
-        var isAvaloniaObject = false;
-        for (var baseType = containingType.BaseType; baseType is not null; baseType = baseType.BaseType)
+        // The base type can be declared in another partial declaration, such as one generated from XAML,
+        // so the check is skipped when the type has no explicit base type
+        if (containingType.BaseType is { SpecialType: not SpecialType.System_Object } declaredBaseType)
         {
-            if (baseType.ToDisplayString() == AvaloniaObjectTypeName)
+            var isAvaloniaObject = false;
+            for (var baseType = declaredBaseType; baseType is not null; baseType = baseType.BaseType)
             {
-                isAvaloniaObject = true;
-                break;
+                if (baseType.ToDisplayString() == AvaloniaObjectTypeName)
+                {
+                    isAvaloniaObject = true;
+                    break;
+                }
             }
-        }
 
-        if (!isAvaloniaObject)
-        {
-            return Results.Error<PropertyModel>(new DiagnosticInfo(Diagnostics.InvalidContainingType, location, symbol.Name));
+            if (!isAvaloniaObject)
+            {
+                return Results.Error<PropertyModel>(new DiagnosticInfo(Diagnostics.InvalidContainingType, location, symbol.Name));
+            }
         }
 
         // Parse attribute
