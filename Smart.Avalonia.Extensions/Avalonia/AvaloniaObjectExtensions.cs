@@ -14,7 +14,7 @@ public static class AvaloniaObjectExtensions
         {
             void OnPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
             {
-                if (e.Property == property && e.NewValue is TValue newValue)
+                if ((e.Property == property) && (e.NewValue is TValue newValue))
                 {
                     observer.OnNext(newValue);
                 }

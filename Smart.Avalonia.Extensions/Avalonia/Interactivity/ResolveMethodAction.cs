@@ -63,7 +63,7 @@ public sealed class ResolveMethodAction : StyledElementAction
             (cachedMethod.Name != methodName))
         {
             cachedMethod = target.GetType().GetRuntimeMethods().FirstOrDefault(methodName, static (m, s) =>
-                m.Name == s &&
+                (m.Name == s) &&
                 (m.GetParameters().Length == 0));
             if (cachedMethod is null)
             {
