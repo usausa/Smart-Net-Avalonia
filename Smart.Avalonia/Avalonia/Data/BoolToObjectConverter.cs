@@ -54,9 +54,7 @@ public abstract class BoolToObjectConverter<T> : IValueConverter
     }
 }
 
-public sealed class BoolToTextConverter : BoolToObjectConverter<string?>
-{
-}
+public sealed class BoolToTextConverter : BoolToObjectConverter<string?>;
 
 public sealed class BoolToBrushConverter : BoolToObjectConverter<IBrush>
 {

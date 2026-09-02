@@ -33,9 +33,7 @@ public sealed class ContainsToBoolConverter : ContainsConverter<bool>
     }
 }
 
-public sealed class ContainsToTextConverter : ContainsConverter<string?>
-{
-}
+public sealed class ContainsToTextConverter : ContainsConverter<string?>;
 
 public sealed class ContainsToBrushConverter : ContainsConverter<IBrush>
 {

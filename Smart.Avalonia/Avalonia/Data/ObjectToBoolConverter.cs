@@ -21,10 +21,6 @@ public abstract class ObjectToBoolConverter<T> : IValueConverter
     }
 }
 
-public sealed class TextToBoolConverter : ObjectToBoolConverter<string?>
-{
-}
+public sealed class TextToBoolConverter : ObjectToBoolConverter<string?>;
 
-public sealed class IntToBoolConverter : ObjectToBoolConverter<int>
-{
-}
+public sealed class IntToBoolConverter : ObjectToBoolConverter<int>;
