@@ -4,7 +4,7 @@ using System.Globalization;
 
 using global::Avalonia;
 
-public sealed class ToLowerUpperConverterTest
+public sealed class ToLowerUpperConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

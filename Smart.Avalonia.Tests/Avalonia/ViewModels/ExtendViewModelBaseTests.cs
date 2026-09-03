@@ -2,7 +2,7 @@ namespace Smart.Avalonia.ViewModels;
 
 using Smart.Avalonia.Input;
 
-public sealed class ExtendViewModelBaseTest
+public sealed class ExtendViewModelBaseTests
 {
     private sealed class TestViewModel : ExtendViewModelBase
     {

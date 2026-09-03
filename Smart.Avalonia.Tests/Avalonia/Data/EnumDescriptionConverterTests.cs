@@ -5,7 +5,7 @@ using System.Globalization;
 
 using global::Avalonia;
 
-public sealed class EnumDescriptionConverterTest
+public sealed class EnumDescriptionConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

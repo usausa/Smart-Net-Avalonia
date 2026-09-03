@@ -6,7 +6,7 @@ using global::Avalonia;
 
 using Smart.Avalonia.Expressions;
 
-public sealed class BinaryConverterTest
+public sealed class BinaryConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

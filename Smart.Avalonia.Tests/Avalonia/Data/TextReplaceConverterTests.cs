@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 using global::Avalonia;
 
-public sealed class TextReplaceConverterTest
+public sealed class TextReplaceConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

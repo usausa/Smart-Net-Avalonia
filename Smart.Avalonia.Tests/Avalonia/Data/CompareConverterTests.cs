@@ -6,7 +6,7 @@ using global::Avalonia;
 
 using Smart.Avalonia.Expressions;
 
-public sealed class CompareConverterTest
+public sealed class CompareConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

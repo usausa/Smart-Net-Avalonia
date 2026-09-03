@@ -4,7 +4,7 @@ using System.Globalization;
 
 using global::Avalonia.Media;
 
-public sealed class ColorToBrushConverterTest
+public sealed class ColorToBrushConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

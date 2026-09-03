@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Input;
 
 using System.Windows.Input;
 
-public sealed class DelegateCommandTest
+public sealed class DelegateCommandTests
 {
     // ---------------------------------------------------------------------------
     // Non-generic DelegateCommand

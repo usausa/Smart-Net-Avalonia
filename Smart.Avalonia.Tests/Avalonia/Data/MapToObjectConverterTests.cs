@@ -4,7 +4,7 @@ using System.Globalization;
 
 using global::Avalonia;
 
-public sealed class MapToObjectConverterTest
+public sealed class MapToObjectConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

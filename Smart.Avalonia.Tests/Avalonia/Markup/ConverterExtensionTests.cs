@@ -5,7 +5,7 @@ using System.Globalization;
 using Smart.Avalonia.Data;
 using Smart.Avalonia.Expressions;
 
-public sealed class ConverterExtensionTest
+public sealed class ConverterExtensionTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
     private static readonly IServiceProvider NullProvider = new NullServiceProvider();

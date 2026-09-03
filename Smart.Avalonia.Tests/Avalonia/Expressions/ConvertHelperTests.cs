@@ -1,6 +1,6 @@
 namespace Smart.Avalonia.Expressions;
 
-public sealed class ConvertHelperTest
+public sealed class ConvertHelperTests
 {
     [Fact]
     public void SameTypeReturnsValue()

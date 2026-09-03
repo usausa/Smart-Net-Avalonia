@@ -5,7 +5,7 @@ using System.Globalization;
 using global::Avalonia;
 using global::Avalonia.Media;
 
-public sealed class ColorBlendConverterTest
+public sealed class ColorBlendConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

@@ -1,6 +1,6 @@
 namespace Smart.Avalonia.Expressions;
 
-public sealed class CompareExpressionsTest
+public sealed class CompareExpressionsTests
 {
     [Fact]
     public void EqualReturnsTrueForSameValue()

@@ -4,7 +4,7 @@ using System.Globalization;
 
 using global::Avalonia;
 
-public sealed class NullToParameterConverterTest
+public sealed class NullToParameterConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

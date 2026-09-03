@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-public sealed class ObjectConvertConverterTest
+public sealed class ObjectConvertConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 

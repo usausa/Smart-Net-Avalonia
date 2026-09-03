@@ -1,6 +1,6 @@
 namespace Smart.Avalonia.Markup;
 
-public sealed class PrimitiveExtensionTest
+public sealed class PrimitiveExtensionTests
 {
     // IServiceProvider stub - these extensions don't use IServiceProvider
     private static readonly IServiceProvider NullProvider = new NullServiceProvider();

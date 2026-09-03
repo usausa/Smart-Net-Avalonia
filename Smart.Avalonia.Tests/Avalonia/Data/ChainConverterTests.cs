@@ -4,7 +4,7 @@ using System.Globalization;
 
 using global::Avalonia;
 
-public sealed class ChainConverterTest
+public sealed class ChainConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
 
