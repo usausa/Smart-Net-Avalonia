@@ -1,8 +1,10 @@
 namespace Smart.Avalonia.Data;
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
+using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 
 using Smart.Converter;
@@ -22,6 +24,16 @@ public sealed class ObjectConvertConverter : IValueConverter
     [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "ObjectConverter uses MakeGenericType/MakeGenericMethod internally; not AOT-safe by design")]
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return Converter.Convert(value, targetType);
+        if (Converter.TryConvert(value, targetType, out var result))
+        {
+            return result;
+        }
+
+        if (!Converter.CanConvert(value, targetType))
+        {
+            Trace.WriteLine($"Converter not found. targetType=[{targetType}], valueType=[{value?.GetType()}]");
+        }
+
+        return BindingOperations.DoNothing;
     }
 }

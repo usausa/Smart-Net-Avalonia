@@ -3,7 +3,7 @@ namespace Smart.Avalonia.Data;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class TextReplaceConverterTests
 {
@@ -89,7 +89,7 @@ public sealed class TextReplaceConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new TextReplaceConverter { Pattern = @"\d+", Replacement = "#" };
@@ -98,6 +98,6 @@ public sealed class TextReplaceConverterTests
         var result = converter.ConvertBack("result", typeof(string), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

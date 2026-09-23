@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Reflection;
 
 using global::Avalonia;
+using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 
 public sealed class EnumDescriptionConverter : IValueConverter
@@ -47,6 +48,6 @@ public sealed class EnumDescriptionConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return AvaloniaProperty.UnsetValue;
+        return BindingOperations.DoNothing;
     }
 }

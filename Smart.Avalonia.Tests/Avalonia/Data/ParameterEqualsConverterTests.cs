@@ -2,6 +2,8 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia.Data;
+
 public sealed class ParameterEqualsConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
@@ -59,7 +61,7 @@ public sealed class ParameterEqualsConverterTests
     }
 
     [Fact]
-    public void ConvertBackFalseReturnsNull()
+    public void ConvertBackFalseReturnsDoNothing()
     {
         // Arrange
         var converter = new ParameterEqualsConverter();
@@ -68,6 +70,6 @@ public sealed class ParameterEqualsConverterTests
         var result = converter.ConvertBack(false, typeof(string), "A", Culture);
 
         // Assert
-        Assert.Null(result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

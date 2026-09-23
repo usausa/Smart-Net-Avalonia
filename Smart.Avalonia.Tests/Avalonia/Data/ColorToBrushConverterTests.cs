@@ -2,6 +2,8 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
+using global::Avalonia.Data;
 using global::Avalonia.Media;
 
 public sealed class ColorToBrushConverterTests
@@ -24,7 +26,7 @@ public sealed class ColorToBrushConverterTests
     }
 
     [Fact]
-    public void ConvertNonColorReturnsNull()
+    public void ConvertNonColorReturnsUnsetValue()
     {
         // Arrange
         var converter = new ColorToBrushConverter();
@@ -33,11 +35,11 @@ public sealed class ColorToBrushConverterTests
         var result = converter.Convert("not a color", typeof(IBrush), null, Culture);
 
         // Assert
-        Assert.Null(result);
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
     }
 
     [Fact]
-    public void ConvertNullReturnsNull()
+    public void ConvertNullReturnsUnsetValue()
     {
         // Arrange
         var converter = new ColorToBrushConverter();
@@ -46,7 +48,7 @@ public sealed class ColorToBrushConverterTests
         var result = converter.Convert(null, typeof(IBrush), null, Culture);
 
         // Assert
-        Assert.Null(result);
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
     }
 
     [Fact]
@@ -65,7 +67,7 @@ public sealed class ColorToBrushConverterTests
     }
 
     [Fact]
-    public void ConvertBackNullReturnsNull()
+    public void ConvertBackNullReturnsDoNothing()
     {
         // Arrange
         var converter = new ColorToBrushConverter();
@@ -74,6 +76,6 @@ public sealed class ColorToBrushConverterTests
         var result = converter.ConvertBack(null, typeof(Color), null, Culture);
 
         // Assert
-        Assert.Null(result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

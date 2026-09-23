@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class BoolToObjectConverterTests
 {
@@ -74,7 +74,7 @@ public sealed class BoolToObjectConverterTests
     }
 
     [Fact]
-    public void ConvertBackNoMatchReturnsUnsetValue()
+    public void ConvertBackNoMatchReturnsDoNothing()
     {
         // Arrange
         var converter = new BoolToTextConverter { TrueValue = "yes", FalseValue = "no" };
@@ -83,11 +83,11 @@ public sealed class BoolToObjectConverterTests
         var result = converter.ConvertBack("other", typeof(bool), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 
     [Fact]
-    public void ConvertBackNullReturnsUnsetValue()
+    public void ConvertBackNullReturnsDoNothing()
     {
         // Arrange
         var converter = new BoolToTextConverter { TrueValue = "yes", FalseValue = "no" };
@@ -96,6 +96,6 @@ public sealed class BoolToObjectConverterTests
         var result = converter.ConvertBack(null, typeof(bool), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

@@ -3,6 +3,7 @@ namespace Smart.Avalonia.Data;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
+using global::Avalonia;
 using global::Avalonia.Data.Converters;
 
 public sealed class AllConverter : IMultiValueConverter
@@ -14,6 +15,11 @@ public sealed class AllConverter : IMultiValueConverter
 
     public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
+        if (values.Contains(AvaloniaProperty.UnsetValue))
+        {
+            return AvaloniaProperty.UnsetValue;
+        }
+
         foreach (var value in values)
         {
             if (!ConvertToBoolean(value, culture))

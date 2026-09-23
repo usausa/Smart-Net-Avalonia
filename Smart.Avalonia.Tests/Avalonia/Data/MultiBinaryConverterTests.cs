@@ -2,6 +2,8 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
+
 using Smart.Avalonia.Expressions;
 
 public sealed class MultiBinaryConverterTests
@@ -45,5 +47,18 @@ public sealed class MultiBinaryConverterTests
 
         // Assert
         Assert.Equal(42, result);
+    }
+
+    [Fact]
+    public void ConvertUnsetValueReturnsUnsetValue()
+    {
+        // Arrange
+        var converter = new MultiBinaryConverter { Expression = BinaryExpressions.Add };
+
+        // Act
+        var result = converter.Convert([1, AvaloniaProperty.UnsetValue, 3], typeof(int), null, Culture);
+
+        // Assert
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
     }
 }

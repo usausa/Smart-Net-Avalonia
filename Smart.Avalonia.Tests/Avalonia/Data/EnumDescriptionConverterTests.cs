@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 
 using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class EnumDescriptionConverterTests
 {
@@ -69,7 +70,7 @@ public sealed class EnumDescriptionConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new EnumDescriptionConverter();
@@ -78,6 +79,6 @@ public sealed class EnumDescriptionConverterTests
         var result = converter.ConvertBack("First Item", typeof(SampleEnum), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

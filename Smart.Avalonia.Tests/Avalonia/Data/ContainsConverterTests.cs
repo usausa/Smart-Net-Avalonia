@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class ContainsConverterTests
 {
@@ -50,7 +50,7 @@ public sealed class ContainsConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new ContainsToBoolConverter();
@@ -59,7 +59,7 @@ public sealed class ContainsConverterTests
         var result = converter.ConvertBack(true, typeof(bool), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 
     [Fact]

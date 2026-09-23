@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 using global::Avalonia.Media;
 
@@ -50,7 +50,7 @@ public abstract class BoolToObjectConverter<T> : IValueConverter
             }
         }
 
-        return AvaloniaProperty.UnsetValue;
+        return BindingOperations.DoNothing;
     }
 }
 

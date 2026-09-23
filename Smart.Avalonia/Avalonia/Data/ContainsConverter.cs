@@ -3,7 +3,7 @@ namespace Smart.Avalonia.Data;
 using System.Collections;
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 using global::Avalonia.Data.Converters;
 using global::Avalonia.Media;
 
@@ -20,7 +20,7 @@ public abstract class ContainsConverter<T> : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return AvaloniaProperty.UnsetValue;
+        return BindingOperations.DoNothing;
     }
 }
 

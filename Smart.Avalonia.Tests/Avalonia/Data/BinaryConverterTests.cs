@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 using Smart.Avalonia.Expressions;
 
@@ -63,7 +63,7 @@ public sealed class BinaryConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new BinaryConverter { Expression = BinaryExpressions.Add };
@@ -72,6 +72,6 @@ public sealed class BinaryConverterTests
         var result = converter.ConvertBack(7, typeof(int), 4, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

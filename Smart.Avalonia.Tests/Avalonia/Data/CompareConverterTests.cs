@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 using Smart.Avalonia.Expressions;
 
@@ -76,7 +76,7 @@ public sealed class CompareConverterTests
     }
 
     [Fact]
-    public void CompareConverterConvertBackReturnsUnsetValue()
+    public void CompareConverterConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new CompareToBoolConverter();
@@ -85,6 +85,6 @@ public sealed class CompareConverterTests
         var result = converter.ConvertBack(true, typeof(int), 5, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

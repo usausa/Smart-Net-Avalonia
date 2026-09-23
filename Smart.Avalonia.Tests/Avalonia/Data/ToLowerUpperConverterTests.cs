@@ -3,6 +3,7 @@ namespace Smart.Avalonia.Data;
 using System.Globalization;
 
 using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class ToLowerUpperConverterTests
 {
@@ -35,7 +36,7 @@ public sealed class ToLowerUpperConverterTests
     }
 
     [Fact]
-    public void ToLowerConvertBackReturnsUnsetValue()
+    public void ToLowerConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new ToLowerConverter();
@@ -44,7 +45,7 @@ public sealed class ToLowerUpperConverterTests
         var result = converter.ConvertBack("hello", typeof(string), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 
     [Fact]
@@ -74,7 +75,7 @@ public sealed class ToLowerUpperConverterTests
     }
 
     [Fact]
-    public void ToUpperConvertBackReturnsUnsetValue()
+    public void ToUpperConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new ToUpperConverter();
@@ -83,6 +84,6 @@ public sealed class ToLowerUpperConverterTests
         var result = converter.ConvertBack("HELLO", typeof(string), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

@@ -2,6 +2,8 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia.Data;
+
 public sealed class ObjectConvertConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
@@ -43,5 +45,57 @@ public sealed class ObjectConvertConverterTests
 
         // Assert
         Assert.Equal(99, result);
+    }
+
+    [Fact]
+    public void ConvertBackInvalidReturnsDoNothing()
+    {
+        // Arrange
+        var converter = new ObjectConvertConverter();
+
+        // Act
+        var result = converter.ConvertBack("abc", typeof(int), null, Culture);
+
+        // Assert
+        Assert.Equal(BindingOperations.DoNothing, result);
+    }
+
+    [Fact]
+    public void ConvertBackEmptyToValueTypeReturnsDoNothing()
+    {
+        // Arrange
+        var converter = new ObjectConvertConverter();
+
+        // Act
+        var result = converter.ConvertBack(string.Empty, typeof(int), null, Culture);
+
+        // Assert
+        Assert.Equal(BindingOperations.DoNothing, result);
+    }
+
+    [Fact]
+    public void ConvertBackEmptyToNullableReturnsNull()
+    {
+        // Arrange
+        var converter = new ObjectConvertConverter();
+
+        // Act
+        var result = converter.ConvertBack(string.Empty, typeof(int?), null, Culture);
+
+        // Assert
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void ConvertBackWithoutConverterReturnsDoNothing()
+    {
+        // Arrange
+        var converter = new ObjectConvertConverter();
+
+        // Act
+        var result = converter.ConvertBack(new object(), typeof(int), null, Culture);
+
+        // Assert
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

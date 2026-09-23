@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class NullToParameterConverterTests
 {
@@ -75,7 +75,7 @@ public sealed class NullToParameterConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new NullToParameterConverter();
@@ -84,6 +84,6 @@ public sealed class NullToParameterConverterTests
         var result = converter.ConvertBack("anything", typeof(object), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }

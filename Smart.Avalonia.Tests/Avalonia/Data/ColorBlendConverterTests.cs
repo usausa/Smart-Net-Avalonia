@@ -3,6 +3,7 @@ namespace Smart.Avalonia.Data;
 using System.Globalization;
 
 using global::Avalonia;
+using global::Avalonia.Data;
 using global::Avalonia.Media;
 
 public sealed class ColorBlendConverterTests
@@ -70,7 +71,7 @@ public sealed class ColorBlendConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new ColorBlendConverter
@@ -83,7 +84,7 @@ public sealed class ColorBlendConverterTests
         var result = converter.ConvertBack(Color.FromRgb(128, 128, 128), typeof(Color), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 
     [Fact]

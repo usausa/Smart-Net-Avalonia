@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class NullToObjectConverterTests
 {
@@ -71,7 +71,7 @@ public sealed class NullToObjectConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new NullToTextConverter { NullValue = "null", NonNullValue = "set" };
@@ -80,7 +80,7 @@ public sealed class NullToObjectConverterTests
         var result = converter.ConvertBack("anything", typeof(string), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 
     [Fact]

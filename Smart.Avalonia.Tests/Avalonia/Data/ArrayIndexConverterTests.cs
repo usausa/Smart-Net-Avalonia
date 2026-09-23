@@ -2,6 +2,8 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
+
 public sealed class ArrayIndexConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
@@ -21,7 +23,7 @@ public sealed class ArrayIndexConverterTests
     }
 
     [Fact]
-    public void ConvertNonIntValueReturnsNull()
+    public void ConvertNonIntValueReturnsUnsetValue()
     {
         // Arrange
         var converter = new ArrayIndexConverter();
@@ -31,11 +33,11 @@ public sealed class ArrayIndexConverterTests
         var result = converter.Convert("x", typeof(string), array, Culture);
 
         // Assert
-        Assert.Null(result);
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
     }
 
     [Fact]
-    public void ConvertNullParameterReturnsNull()
+    public void ConvertNullParameterReturnsUnsetValue()
     {
         // Arrange
         var converter = new ArrayIndexConverter();
@@ -44,7 +46,35 @@ public sealed class ArrayIndexConverterTests
         var result = converter.Convert(0, typeof(string), null, Culture);
 
         // Assert
-        Assert.Null(result);
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+    }
+
+    [Fact]
+    public void ConvertNegativeIndexReturnsUnsetValue()
+    {
+        // Arrange
+        var converter = new ArrayIndexConverter();
+        string[] array = ["a", "b", "c"];
+
+        // Act
+        var result = converter.Convert(-1, typeof(string), array, Culture);
+
+        // Assert
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+    }
+
+    [Fact]
+    public void ConvertIndexOutOfRangeReturnsUnsetValue()
+    {
+        // Arrange
+        var converter = new ArrayIndexConverter();
+        string[] array = ["a", "b", "c"];
+
+        // Act
+        var result = converter.Convert(3, typeof(string), array, Culture);
+
+        // Assert
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
     }
 
     [Fact]

@@ -2,6 +2,8 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
+using global::Avalonia;
+
 public sealed class AllAnyConverterTests
 {
     private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
@@ -62,6 +64,19 @@ public sealed class AllAnyConverterTests
         Assert.Equal(true, result);
     }
 
+    [Fact]
+    public void AllConverterUnsetValueReturnsUnsetValue()
+    {
+        // Arrange
+        var converter = new AllConverter();
+
+        // Act
+        var result = converter.Convert([true, AvaloniaProperty.UnsetValue], typeof(bool), null, Culture);
+
+        // Assert
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+    }
+
     // ---------------------------------------------------------------------------
     // AnyConverter
     // ---------------------------------------------------------------------------
@@ -116,5 +131,18 @@ public sealed class AllAnyConverterTests
 
         // Assert
         Assert.Equal(false, result);
+    }
+
+    [Fact]
+    public void AnyConverterUnsetValueReturnsUnsetValue()
+    {
+        // Arrange
+        var converter = new AnyConverter();
+
+        // Act
+        var result = converter.Convert([false, AvaloniaProperty.UnsetValue], typeof(bool), null, Culture);
+
+        // Assert
+        Assert.Equal(AvaloniaProperty.UnsetValue, result);
     }
 }

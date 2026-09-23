@@ -2,7 +2,7 @@ namespace Smart.Avalonia.Data;
 
 using System.Globalization;
 
-using global::Avalonia;
+using global::Avalonia.Data;
 
 public sealed class MapToObjectConverterTests
 {
@@ -76,7 +76,7 @@ public sealed class MapToObjectConverterTests
     }
 
     [Fact]
-    public void ConvertBackReturnsUnsetValue()
+    public void ConvertBackReturnsDoNothing()
     {
         // Arrange
         var converter = new MapToTextConverter { DefaultValue = "default" };
@@ -85,6 +85,6 @@ public sealed class MapToObjectConverterTests
         var result = converter.ConvertBack("something", typeof(string), null, Culture);
 
         // Assert
-        Assert.Equal(AvaloniaProperty.UnsetValue, result);
+        Assert.Equal(BindingOperations.DoNothing, result);
     }
 }
