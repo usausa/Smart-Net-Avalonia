@@ -12,7 +12,7 @@ public static class DataContextResolver
         AvaloniaProperty.RegisterAttached<Control, object?>("Resolved", typeof(DataContextResolver));
 
     public static readonly AttachedProperty<bool> DisposeOnChangedProperty =
-        AvaloniaProperty.RegisterAttached<Control, bool>("DisposeOnChanged", typeof(DataContextResolver));
+        AvaloniaProperty.RegisterAttached<Control, bool>("DisposeOnChanged", typeof(DataContextResolver), true);
 
     public static Type GetType(Control control) =>
         control.GetValue(TypeProperty);
