@@ -7,65 +7,63 @@ using global::Avalonia.VisualTree;
 public static class VisualExtensions
 {
     // ------------------------------------------------------------
-    // Children
+    // Descendant
     // ------------------------------------------------------------
 
-    public static IEnumerable<T> FindDescendants<T>(this Visual source)
+    public static IEnumerable<T> FindDescendants<T, TState>(this Visual source, TState state, Func<T, TState, bool> predicate)
         where T : Visual
     {
-        foreach (var child in source.GetVisualChildren())
+        foreach (var descendant in source.GetVisualDescendants())
         {
-            if (child is T typedChild)
+            if ((descendant is T typedDescendant) && predicate(typedDescendant, state))
             {
-                yield return typedChild;
-            }
-
-            foreach (var descendant in child.FindDescendants<T>())
-            {
-                yield return descendant;
+                yield return typedDescendant;
             }
         }
     }
 
-    public static IEnumerable<T> FindDescendants<T>(this Visual source, Func<T, bool> predicate)
+    public static T? FindDescendant<T, TState>(this Visual source, TState state, Func<T, TState, bool> predicate)
         where T : Visual
     {
-        foreach (var child in source.FindDescendants<T>())
+        foreach (var descendant in source.GetVisualDescendants())
         {
-            if (predicate(child))
+            if ((descendant is T typedDescendant) && predicate(typedDescendant, state))
             {
-                yield return child;
+                return typedDescendant;
             }
         }
+
+        return null;
     }
 
-    public static T? FindDescendant<T>(this Visual source)
+    public static T? FindDescendantOrSelf<T, TState>(this Visual source, TState state, Func<T, TState, bool> predicate)
         where T : Visual =>
-        source.FindDescendants<T>().FirstOrDefault();
-
-    public static T? FindDescendant<T>(this Visual source, Func<T, bool> predicate)
-        where T : Visual =>
-        source.FindDescendants<T>().FirstOrDefault(predicate);
+        (source is T self) && predicate(self, state) ? self : source.FindDescendant(state, predicate);
 
     // ------------------------------------------------------------
-    // Ancestry
+    // Ascendant
     // ------------------------------------------------------------
 
-    public static bool IsDescendantOf(this Visual element, Visual ancestor)
+    public static T? FindAscendant<T, TState>(this Visual source, TState state, Func<T, TState, bool> predicate)
+        where T : Visual
     {
-        var current = element.GetVisualParent();
-        while (current is not null)
+        var parent = source.GetVisualParent();
+        while (parent is not null)
         {
-            if (current == ancestor)
+            if ((parent is T typedParent) && predicate(typedParent, state))
             {
-                return true;
+                return typedParent;
             }
 
-            current = current.GetVisualParent();
+            parent = parent.GetVisualParent();
         }
 
-        return false;
+        return null;
     }
+
+    public static T? FindAscendantOrSelf<T, TState>(this Visual source, TState state, Func<T, TState, bool> predicate)
+        where T : Visual =>
+        (source is T self) && predicate(self, state) ? self : source.FindAscendant(state, predicate);
 
     // ------------------------------------------------------------
     // Render
