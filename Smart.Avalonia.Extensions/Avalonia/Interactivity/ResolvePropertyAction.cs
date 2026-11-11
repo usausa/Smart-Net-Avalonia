@@ -30,8 +30,12 @@ public sealed class ResolvePropertyAction : StyledElementAction
 
     private Type? cachedType;
 
+    [RequiresUnreferencedCode("Uses GetRuntimeProperty to find property by name; property metadata may be trimmed.")]
+    public ResolvePropertyAction()
+    {
+    }
+
     [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Target type is determined at runtime via XAML; callers must ensure the type is preserved")]
-    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "PropertyInfo.GetValue is used at runtime; not AOT-safe by design")]
     public override object Execute(object? sender, object? parameter)
     {
         if (!IsEnabled)

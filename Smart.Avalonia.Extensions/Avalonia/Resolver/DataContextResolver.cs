@@ -1,5 +1,7 @@
 namespace Smart.Avalonia.Resolver;
 
+using System.Diagnostics.CodeAnalysis;
+
 using global::Avalonia;
 using global::Avalonia.Controls;
 
@@ -17,7 +19,7 @@ public static class DataContextResolver
     public static Type GetType(Control control) =>
         control.GetValue(TypeProperty);
 
-    public static void SetType(Control control, Type value) =>
+    public static void SetType(Control control, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] Type value) =>
         control.SetValue(TypeProperty, value);
 
     public static bool GetDisposeOnChanged(Control control) =>

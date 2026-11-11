@@ -14,7 +14,7 @@ public sealed class CompareTrigger : StyledElementTrigger
         AvaloniaProperty.Register<CompareTrigger, object?>(nameof(Parameter));
 
     public static readonly StyledProperty<ICompareExpression?> ExpressionProperty =
-        AvaloniaProperty.Register<CompareTrigger, ICompareExpression?>(nameof(Expression));
+        AvaloniaProperty.Register<CompareTrigger, ICompareExpression?>(nameof(Expression), CompareExpressions.Equal);
 
     public object? Binding
     {
@@ -66,7 +66,7 @@ public sealed class CompareTrigger : StyledElementTrigger
         var expression = Expression ?? CompareExpressions.Equal;
         if (expression.Eval(Binding, Parameter))
         {
-            Interaction.ExecuteActions(AssociatedObject, Actions, Parameter);
+            Interaction.ExecuteActions(AssociatedObject, Actions, null);
         }
     }
 }
