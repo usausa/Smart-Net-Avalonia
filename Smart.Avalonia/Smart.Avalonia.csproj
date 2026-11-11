@@ -15,9 +15,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="12.1.5" />
-    <PackageReference Include="Usa.Smart.Converter" Version="2.18.0" />
-    <PackageReference Include="Usa.Smart.Core" Version="2.20.0" />
+    <PackageReference Include="Avalonia" Version="12.1.6" />
+    <PackageReference Include="Usa.Smart.Converter" Version="2.19.0" />
+    <PackageReference Include="Usa.Smart.Core" Version="2.21.0" />
     <PackageReference Include="Xaml.Behaviors.Avalonia" Version="12.1.5" />
   </ItemGroup>
 
