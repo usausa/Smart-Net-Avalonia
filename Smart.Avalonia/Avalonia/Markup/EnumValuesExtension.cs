@@ -1,7 +1,5 @@
 namespace Smart.Avalonia.Markup;
 
-using System.Diagnostics.CodeAnalysis;
-
 using global::Avalonia.Markup.Xaml;
 
 public sealed class EnumValuesExtension : MarkupExtension
@@ -13,7 +11,15 @@ public sealed class EnumValuesExtension : MarkupExtension
         Type = type;
     }
 
-    [UnconditionalSuppressMessage("Trimming", "IL2111", Justification = "Enum type is specified by user; they must ensure it is preserved")]
-    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Enum.GetValues(Type) uses dynamic code; use Enum.GetValues<TEnum>() for AOT-safe usage")]
-    public override object ProvideValue(IServiceProvider serviceProvider) => Enum.GetValues(Type);
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        var values = Enum.GetValuesAsUnderlyingType(Type);
+        var result = new object[values.Length];
+        for (var i = 0; i < values.Length; i++)
+        {
+            result[i] = Enum.ToObject(Type, values.GetValue(i)!);
+        }
+
+        return result;
+    }
 }

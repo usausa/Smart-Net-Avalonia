@@ -210,6 +210,6 @@ public sealed class ConverterExtensionTests
 
         // Assert
         var values = Assert.IsAssignableFrom<Array>(result);
-        Assert.Equal(7, values.Length);
+        Assert.Equal(Enum.GetValues<DayOfWeek>().Cast<object>(), values.Cast<object>());
     }
 }
