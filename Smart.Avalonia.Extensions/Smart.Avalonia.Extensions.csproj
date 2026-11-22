@@ -21,7 +21,7 @@
     <PackageReference Include="Avalonia" Version="12.1.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="11.0.0" />
     <PackageReference Include="System.Reactive" Version="7.0.0" />
-    <PackageReference Include="Usa.Smart.Core" Version="3.0.0" />
+    <PackageReference Include="Usa.Smart.Core" Version="3.2.0" />
     <PackageReference Include="Usa.Smart.Mvvm" Version="3.0.0" />
     <PackageReference Include="Usa.Smart.Reactive" Version="3.0.0" />
     <PackageReference Include="Xaml.Behaviors.Avalonia" Version="12.1.5" />

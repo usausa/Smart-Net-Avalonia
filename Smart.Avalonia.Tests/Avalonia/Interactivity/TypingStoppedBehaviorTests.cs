@@ -73,4 +73,31 @@ public sealed class TypingStoppedBehaviorTests
         // Assert
         Assert.Equal("parameter", received);
     }
+
+    [Fact]
+    public void UsesNullWhenCommandParameterIsSetToNull()
+    {
+        // Arrange
+        var textBox = new TextBox();
+        var executed = false;
+        object? received = "initial";
+        Interaction.GetBehaviors(textBox).Add(new TypingStoppedBehavior
+        {
+            Command = new DelegateCommand<object?>(x =>
+            {
+                executed = true;
+                received = x;
+            }),
+            CommandParameter = null,
+            Delay = TimeSpan.FromMilliseconds(10)
+        });
+
+        // Act
+        textBox.Text = "abc";
+        TestDispatcher.ProcessUntil(() => executed, Timeout);
+
+        // Assert
+        Assert.True(executed);
+        Assert.Null(received);
+    }
 }
