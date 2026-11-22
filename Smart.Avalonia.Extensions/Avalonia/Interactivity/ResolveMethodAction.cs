@@ -7,7 +7,9 @@ using global::Avalonia;
 using global::Avalonia.Xaml.Interactivity;
 
 using Smart.Linq;
+using Smart.Mvvm.Messaging;
 
+[RequiresUnreferencedCode("Uses GetRuntimeMethods to find method by name; method metadata may be trimmed.")]
 public sealed class ResolveMethodAction : StyledElementAction
 {
     public static readonly StyledProperty<object?> TargetObjectProperty =
@@ -28,16 +30,12 @@ public sealed class ResolveMethodAction : StyledElementAction
         set => SetValue(MethodNameProperty, value);
     }
 
-    private MethodInfo? cachedMethod;
+    private MethodInvoker? cachedInvoker;
+
+    private string cachedMethodName = string.Empty;
 
     private Type? cachedType;
 
-    [RequiresUnreferencedCode("Uses GetRuntimeMethods to find method by name; method metadata may be trimmed.")]
-    public ResolveMethodAction()
-    {
-    }
-
-    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Target type is determined at runtime via XAML; callers must ensure the type is preserved")]
     public override object Execute(object? sender, object? parameter)
     {
         if (!IsEnabled)
@@ -45,39 +43,35 @@ public sealed class ResolveMethodAction : StyledElementAction
             return false;
         }
 
-        if (parameter is not Smart.Mvvm.Messaging.ResolveEventArgs args)
+        if (parameter is not ResolveEventArgs args)
         {
             return false;
         }
 
         var target = TargetObject ?? sender;
-        if (target is null)
-        {
-            return false;
-        }
-
         var methodName = MethodName;
-        if (String.IsNullOrEmpty(methodName))
+        if ((target is null) || String.IsNullOrEmpty(methodName))
         {
             return false;
         }
 
-        if ((cachedMethod is null) ||
+        if ((cachedInvoker is null) ||
             (cachedType != target.GetType()) ||
-            (cachedMethod.Name != methodName))
+            (cachedMethodName != methodName))
         {
-            cachedMethod = target.GetType().GetRuntimeMethods().FirstOrDefault(methodName, static (m, s) =>
-                (m.Name == s) &&
-                (m.GetParameters().Length == 0));
-            if (cachedMethod is null)
+            var methodInfo = target.GetType().GetRuntimeMethods()
+                .FirstOrDefault(methodName, static (m, s) => (m.Name == s) && (m.GetParameters().Length == 0));
+            if (methodInfo is null)
             {
                 return false;
             }
 
+            cachedInvoker = MethodInvoker.Create(methodInfo);
+            cachedMethodName = methodName;
             cachedType = target.GetType();
         }
 
-        args.Result = cachedMethod.Invoke(target, null);
+        args.Result = cachedInvoker.Invoke(target);
         return true;
     }
 }

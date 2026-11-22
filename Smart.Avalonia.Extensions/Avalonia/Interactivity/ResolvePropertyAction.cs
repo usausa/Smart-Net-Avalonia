@@ -6,6 +6,9 @@ using System.Reflection;
 using global::Avalonia;
 using global::Avalonia.Xaml.Interactivity;
 
+using Smart.Mvvm.Messaging;
+
+[RequiresUnreferencedCode("Uses GetRuntimeProperty to find property by name; property metadata may be trimmed.")]
 public sealed class ResolvePropertyAction : StyledElementAction
 {
     public static readonly StyledProperty<object?> TargetObjectProperty =
@@ -30,12 +33,6 @@ public sealed class ResolvePropertyAction : StyledElementAction
 
     private Type? cachedType;
 
-    [RequiresUnreferencedCode("Uses GetRuntimeProperty to find property by name; property metadata may be trimmed.")]
-    public ResolvePropertyAction()
-    {
-    }
-
-    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Target type is determined at runtime via XAML; callers must ensure the type is preserved")]
     public override object Execute(object? sender, object? parameter)
     {
         if (!IsEnabled)
@@ -43,19 +40,14 @@ public sealed class ResolvePropertyAction : StyledElementAction
             return false;
         }
 
-        if (parameter is not Smart.Mvvm.Messaging.ResolveEventArgs args)
+        if (parameter is not ResolveEventArgs args)
         {
             return false;
         }
 
         var target = TargetObject ?? sender;
-        if (target is null)
-        {
-            return false;
-        }
-
         var propertyName = PropertyName;
-        if (String.IsNullOrEmpty(propertyName))
+        if ((target is null) || String.IsNullOrEmpty(propertyName))
         {
             return false;
         }
